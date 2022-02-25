@@ -1,0 +1,32 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    name: MCTO
+    url: jdbc:mysql://120.76.205.240:3306/MCTO?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: Ydl1312076409
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+
+
+#spring.datasource.druid.test-on-borrow=true
+
+global-config:
+  db-config:
+    table-prefix: ims.
+    id-type: uuid
+    field-strategy: not_empty
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+configuration:
+  map-underscore-to-camel-case: true
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  cache-enabled: false
+  database-id: mysql
