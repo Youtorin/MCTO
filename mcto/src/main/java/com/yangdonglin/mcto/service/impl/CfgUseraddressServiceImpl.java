@@ -1,8 +1,8 @@
 package com.yangdonglin.mcto.service.impl;
 
-import com.yangdonglin.mcto.entity.CfgUseraddress;
-import com.yangdonglin.mcto.mapper.CfgUseraddressMapper;
-import com.yangdonglin.mcto.service.CfgUseraddressService;
+import com.yangdonglin.mcto.entity.CfgUserAddress;
+import com.yangdonglin.mcto.mapper.CfgUserAddressMapper;
+import com.yangdonglin.mcto.service.CfgUserAddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-02-21
  */
 @Service
-public class CfgUseraddressServiceImpl extends ServiceImpl<CfgUseraddressMapper, CfgUseraddress> implements CfgUseraddressService {
+public class CfgUserAddressServiceImpl extends ServiceImpl<CfgUserAddressMapper, CfgUserAddress> implements CfgUserAddressService {
 
 }

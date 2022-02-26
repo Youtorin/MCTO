@@ -4,9 +4,9 @@ import Home from "@/modules/dashboard.vue"
 const routes = [
     {
         path: '/',
-        redirect: '/dashboard/Home'
+        redirect: '/api/dashboard/Home'
     }, {
-        path: "/dashboard",
+        path: "/api/dashboard",
         name: "dashboard",
         component: Home,
         children: [

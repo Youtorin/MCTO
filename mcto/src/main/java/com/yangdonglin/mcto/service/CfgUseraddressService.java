@@ -1,6 +1,7 @@
 package com.yangdonglin.mcto.service;
 
-import com.yangdonglin.mcto.entity.CfgUseraddress;
+import com.yangdonglin.mcto.entity.CfgUserAddress;
+import com.yangdonglin.mcto.entity.CfgUserAddress;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Yangdonglin
  * @since 2022-02-21
  */
-public interface CfgUseraddressService extends IService<CfgUseraddress> {
+public interface CfgUserAddressService extends IService<CfgUserAddress> {
 
 }

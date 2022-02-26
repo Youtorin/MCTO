@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("CFG_UserAddress")
-public class CfgUseraddress extends BaseEntity {
+public class CfgUserAddress extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

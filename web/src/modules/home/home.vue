@@ -1,56 +1,264 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="8">
-        <el-card shadow="hover" class="mgb20" style="height: 252px">
-          <div class="user-info">
-            <img src="@/assets/img/img.jpg" class="user-avator" alt />
-            <div class="user-info-cont">
-              <div class="user-info-name">{{ name }}</div>
-              <div>{{ role }}</div>
-            </div>
-          </div>
-          <div class="user-info-list">
-            上次登录时间：
-            <span>2022-2-22</span>
-          </div>
-          <div class="user-info-list">
-            上次登录地点：
-            <span>广州</span>
-          </div>
+      <el-col :span="6">
+        <el-card
+          shadow="hover"
+          style="height: 100px; background-color: rgba(54, 207, 202)"
+        >
+          <el-row :gutter="10">
+            <el-col :span="6"
+              ><i
+                class="el-icon-suitcase"
+                style="font-size: 65px; margin-left: 20px"
+              ></i
+            ></el-col>
+            <el-col :span="18">
+              <el-row>
+                <el-col :span="24" class="elRowText"
+                  ><span>¥ 34522</span></el-col
+                >
+              </el-row>
+              <el-row>
+                <el-col
+                  :span="24"
+                  style="
+                    text-align: center;
+                    color: white;
+                    margin-top: -5px;
+                    font-size: 14px;
+                  "
+                  ><span>今日销售总额</span></el-col
+                >
+              </el-row>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card
+          shadow="hover"
+          style="height: 100px; background-color: rgba(255, 196, 57)"
+        >
+          <el-row :gutter="10">
+            <el-col :span="6"
+              ><i
+                class="el-icon-shopping-cart-2"
+                style="font-size: 65px; margin-left: 20px"
+              ></i
+            ></el-col>
+            <el-col :span="18">
+              <el-row>
+                <el-col :span="24" class="elRowText"><span>45211</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col
+                  :span="24"
+                  style="
+                    text-align: center;
+                    color: white;
+                    margin-top: -5px;
+                    font-size: 14px;
+                  "
+                  ><span>今日订单量</span></el-col
+                >
+              </el-row>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+
+      <el-col :span="6">
+        <el-card
+          shadow="hover"
+          style="height: 100px; background-color: rgba(253, 77, 79)"
+        >
+          <el-row :gutter="10">
+            <el-col :span="6"
+              ><i
+                class="el-icon-chat-line-square"
+                style="font-size: 65px; margin-left: 20px"
+              ></i
+            ></el-col>
+            <el-col :span="18">
+              <el-row>
+                <el-col :span="24" class="elRowText"><span>4552</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col
+                  :span="24"
+                  style="
+                    text-align: center;
+                    color: white;
+                    margin-top: -5px;
+                    font-size: 14px;
+                  "
+                  ><span>今日评论数</span></el-col
+                >
+              </el-row>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card
+          shadow="hover"
+          style="height: 100px; background-color: rgba(66, 167, 255)"
+        >
+          <el-row :gutter="10">
+            <el-col :span="6"
+              ><i
+                class="el-icon-view"
+                style="font-size: 65px; margin-left: 20px"
+              ></i
+            ></el-col>
+            <el-col :span="18">
+              <el-row>
+                <el-col :span="24" class="elRowText"><span>4522</span></el-col>
+              </el-row>
+              <el-row>
+                <el-col
+                  :span="24"
+                  style="
+                    text-align: center;
+                    color: white;
+                    margin-top: -5px;
+                    font-size: 14px;
+                  "
+                  ><span>今日访问量</span></el-col
+                >
+              </el-row>
+            </el-col>
+          </el-row>
         </el-card>
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :span="24">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="日期"> </el-table-column>
-          <el-table-column prop="name" label="姓名"> </el-table-column>
-          <el-table-column prop="address" label="地址"> </el-table-column>
-        </el-table>
+      <el-col :span="12">
+        <el-card shadow="hover" style="height: 120px">
+          <el-row>
+            <el-col :span="20">
+              <span style="font-weight: bold">会员统计</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="float: right; color: #898989; font-size: 14px"
+                >单位（个）</span
+              >
+            </el-col>
+          </el-row>
+          <el-row
+            :gutter="5"
+            style="font-size: 34px; font-weight: bold; margin-top: -10px"
+          >
+            <el-col :span="7">
+              <span>{{ userStatistics.newToday }}</span>
+            </el-col>
+            <el-col :span="7">
+              <span>{{ userStatistics.newYesterday }}</span>
+            </el-col>
+            <el-col :span="7">
+              <span>{{ userStatistics.newMonth }}</span>
+            </el-col>
+            <el-col :span="3">
+              <span style="float: right">{{ userStatistics.total }}</span>
+            </el-col>
+          </el-row>
+          <el-row
+            :gutter="10"
+            style="font-size: 12px; margin-top: -15px; color: #898989"
+          >
+            <el-col :span="7">
+              <span>今日新增</span>
+            </el-col>
+            <el-col :span="7">
+              <span>昨日新增</span>
+            </el-col>
+            <el-col :span="7">
+              <span>本月新增</span>
+            </el-col>
+            <el-col :span="3">
+              <span style="float: right">会员总数</span>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover" style="height: 120px">
+          <el-row>
+            <el-col :span="20">
+              <span style="font-weight: bold">商品统计</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="float: right; color: #898989; font-size: 14px"
+                >单位（件）</span
+              >
+            </el-col>
+          </el-row>
+          <el-row
+            :gutter="5"
+            style="font-size: 34px; font-weight: bold; margin-top: -10px"
+          >
+            <el-col :span="11">
+              <span>{{ foodStatistics.total }}</span>
+            </el-col>
+            <el-col :span="11">
+              <span>{{ foodStatistics.foodNum }}</span>
+            </el-col>
+            <el-col :span="2">
+              <span style="float: right">{{ foodStatistics.foodCate }}</span>
+            </el-col>
+          </el-row>
+          <el-row
+            :gutter="10"
+            style="font-size: 12px; margin-top: -15px; color: #898989"
+          >
+            <el-col :span="11">
+              <span>商品总数</span>
+            </el-col>
+            <el-col :span="10">
+              <span>商家商品</span>
+            </el-col>
+            <el-col :span="3">
+              <span style="float: right">商品类目</span>
+            </el-col>
+          </el-row>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
+
 <script>
+import { GetModelList } from "@/api/index.js";
+import { messageShow } from "@/assets/js/Common.js";
 export default {
   name: "dashboard",
   mounted: function () {
-    this.name = localStorage.getItem("ms_username");
-    this.role = this.name === "admin" ? "超级管理员" : "普通用户";
+    GetModelList()
+      .then((res) => {
+        if (res.success) {
+          this.table = res.success;
+        }
+      })
+      .catch((res) => {
+        messageShow("error", "查找失败");
+      });
   },
   data() {
     return {
-      name: "",
-      role: "",
-      tableData: [
-        {
-          date: "2021-2-1",
-          name: "yangdonglin",
-          address: "beijing",
-        },
-      ],
+      table: "",
+      userStatistics: {
+        newToday: 0, //今日新增
+        newYesterday: 22, //昨日新增
+        newMonth: 131, //本月新增
+        total: 1352, //会员总数
+      },
+      foodStatistics: {
+        total: 4312, //商品总数
+        foodNum: 312, //商家商品数
+        foodCate: 8,
+      },
     };
   },
   methods: {},
@@ -58,112 +266,28 @@ export default {
 </script>
 
 <style scoped>
+.el-card {
+  border-radius: 15px;
+}
 .el-row {
   margin-bottom: 20px;
 }
 
-.grid-content {
-  display: flex;
-  align-items: center;
-  height: 100px;
-}
-
-.grid-cont-right {
-  flex: 1;
+.elRowText {
   text-align: center;
-  font-size: 14px;
-  color: #999;
-}
-
-.grid-num {
   font-size: 30px;
   font-weight: bold;
+  color: white;
+  margin-top: -10px;
 }
 
-.grid-con-icon {
-  font-size: 50px;
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  line-height: 100px;
-  color: #fff;
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
 }
 
-.grid-con-1 .grid-con-icon {
-  background: rgb(45, 140, 240);
-}
-
-.grid-con-1 .grid-num {
-  color: rgb(45, 140, 240);
-}
-
-.grid-con-2 .grid-con-icon {
-  background: rgb(100, 213, 114);
-}
-
-.grid-con-2 .grid-num {
-  color: rgb(45, 140, 240);
-}
-
-.grid-con-3 .grid-con-icon {
-  background: rgb(242, 94, 67);
-}
-
-.grid-con-3 .grid-num {
-  color: rgb(242, 94, 67);
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #ccc;
-  margin-bottom: 20px;
-}
-
-.user-avator {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-}
-
-.user-info-cont {
-  padding-left: 50px;
-  flex: 1;
-  font-size: 14px;
-  color: #999;
-}
-
-.user-info-cont div:first-child {
-  font-size: 30px;
-  color: #222;
-}
-
-.user-info-list {
-  font-size: 14px;
-  color: #999;
-  line-height: 25px;
-}
-
-.user-info-list span {
-  margin-left: 70px;
-}
-
-.mgb20 {
-  margin-bottom: 20px;
-}
-
-.todo-item {
-  font-size: 14px;
-}
-
-.todo-item-del {
-  text-decoration: line-through;
-  color: #999;
-}
-
-.schart {
-  width: 100%;
-  height: 300px;
+.clearfix:after {
+  clear: both;
 }
 </style>

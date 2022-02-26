@@ -38,7 +38,7 @@ public class CfgOrderdetail extends BaseEntity {
     /**
      * 用户地址ID
      */
-    private String userAddressId;
+    private String UserAddressId;
 
     /**
      * 经度
@@ -53,7 +53,7 @@ public class CfgOrderdetail extends BaseEntity {
     /**
      * 用户详细地址
      */
-    private String userAddress;
+    private String UserAddress;
 
     /**
      * 商铺名字

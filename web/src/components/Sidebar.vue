@@ -58,7 +58,7 @@ export default {
     const items = [
       {
         icon: "el-icon-lx-home",
-        index: "/dashboard/home",
+        index: "/api/dashboard/home",
         title: "商家首页",
       },
       {
@@ -67,7 +67,7 @@ export default {
         title: "订单管理",
         subs: [
           {
-            index: "/dashboard/order",
+            index: "/api/dashboard/order",
             title: "待办订单管理",
           },
         ],
@@ -78,48 +78,48 @@ export default {
         title: "评价管理",
         subs: [
           {
-            index: "/dashboard/shopComment",
+            index: "/api/dashboard/shopComment",
             title: "门店评价",
           },
           {
-            index: "/dashboard/comment",
+            index: "/api/dashboard/comment",
             title: "项目评价",
           },
         ],
       },
       {
         icon: "el-icon-lx-cart",
-        index: "/dashboard/commodity",
+        index: "/api/dashboard/commodity",
         title: "商品管理",
       },
       {
         icon: "el-icon-lx-profile",
-        index: "/dashboard/customer",
+        index: "/api/dashboard/customer",
         title: "顾客管理",
       },
       {
         icon: "el-icon-lx-time",
-        index: "/dashboard/distribution",
+        index: "/api/dashboard/distribution",
         title: "配送状态",
       },
       {
         icon: "el-icon-lx-recharge",
-        index: "/dashboard/finance",
+        index: "/api/dashboard/finance",
         title: "财务管理",
       },
       {
         icon: "el-icon-lx-rank",
-        index: "/dashboard/analysis",
+        index: "/api/dashboard/analysis",
         title: "经营分析",
       },
       {
         icon: "el-icon-lx-shop",
-        index: "/dashboard/shop",
+        index: "/api/dashboard/shop",
         title: "门店管理",
       },
       {
         icon: "el-icon-lx-settings",
-        index: "/dashboard/setting",
+        index: "/api/dashboard/setting",
         title: "设置",
       },
     ];

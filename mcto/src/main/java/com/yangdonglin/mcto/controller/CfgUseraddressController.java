@@ -1,14 +1,11 @@
 package com.yangdonglin.mcto.controller;
 
 
-import com.yangdonglin.mcto.entity.CfgUseraddress;
+import com.yangdonglin.mcto.entity.CfgUserAddress;
 import com.yangdonglin.mcto.module.AjaxResponse;
 import com.yangdonglin.mcto.module.BaseController;
-import com.yangdonglin.mcto.service.CfgUseraddressService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.yangdonglin.mcto.service.CfgUserAddressService;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -21,20 +18,27 @@ import javax.annotation.Resource;
  * @since 2022-02-21
  */
 @RestController
-@RequestMapping("/cfg-useraddress")
-public class CfgUseraddressController extends BaseController {
+@CrossOrigin(allowCredentials="true")
+@RequestMapping("/api/UserAddress")
+public class CfgUserAddressController extends BaseController {
 
     @Resource
-    CfgUseraddressService cfgUseraddressService;
+    CfgUserAddressService cfgUserAddressService;
 
-    @PostMapping("getList")
+    @PostMapping("/getList")
     public AjaxResponse getList(){
-        CfgUseraddress result = cfgUseraddressService.getById('1');
+        CfgUserAddress result = cfgUserAddressService.getById('1');
+        System.out.println(111);
         if(result!=null){
+            System.out.println(result);
             return AjaxResponse.success(result);
         }else {
             return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);
         }
 
+    }
+    @PostMapping("/sayHello")
+    public String sayHello() {
+        return "hello world !";
     }
 }
