@@ -1,5 +1,5 @@
 import request from '../utils/request';
-import { post, get } from '../plugins/ajax'
+import { post, get } from '@/plugins/ajax'
 
 /*
  * 获取实体列表

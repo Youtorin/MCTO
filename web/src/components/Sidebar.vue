@@ -63,8 +63,29 @@ export default {
       },
       {
         icon: "el-icon-lx-sort",
-        index: "/dashboard/order",
+        index: "order",
         title: "订单管理",
+        subs: [
+          {
+            index: "/dashboard/order",
+            title: "待办订单管理",
+          },
+        ],
+      },
+      {
+        icon: "el-icon-lx-sort",
+        index: "comment",
+        title: "评价管理",
+        subs: [
+          {
+            index: "/dashboard/shopComment",
+            title: "门店评价",
+          },
+          {
+            index: "/dashboard/comment",
+            title: "项目评价",
+          },
+        ],
       },
       {
         icon: "el-icon-lx-cart",
@@ -92,9 +113,9 @@ export default {
         title: "经营分析",
       },
       {
-        icon: "el-icon-lx-people",
-        index: "/dashboard/user",
-        title: "个人中心",
+        icon: "el-icon-lx-shop",
+        index: "/dashboard/shop",
+        title: "门店管理",
       },
       {
         icon: "el-icon-lx-settings",

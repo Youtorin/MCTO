@@ -77,9 +77,9 @@ export default {
     const handleCommand = (command) => {
       if (command == "loginout") {
         localStorage.removeItem("ms_username");
-        router.push("/login");
+        router.push("login");
       } else if (command == "user") {
-        router.forward("name");
+        router.push("user");
       }
     };
 
@@ -150,6 +150,10 @@ export default {
   color: #fff;
 }
 .user-name {
+  padding-left: 10px;
+}
+.el-dropdown .el-dropdown-selfdefine {
+  outline: 0;
   margin-left: 10px;
 }
 .user-avator {

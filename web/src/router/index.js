@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "@/modules/Home.vue"
+import Home from "@/modules/dashboard.vue"
 
 const routes = [
     {
@@ -16,63 +16,86 @@ const routes = [
                 meta: {
                     title: '商家首页'
                 },
-                component: () => import("@/modules/dashboard.vue")
+                component: () => import("@/modules/home/home.vue")
             }, {
                 path: "order",
                 name: "order",
                 meta: {
                     title: '订单管理'
                 },
-                component: () => import("@/modules/order.vue")
+                component: () => import("@/modules/order/order.vue")
             }, {
+                path: "comment",
+                name: "comment",
+                meta: {
+                    title: '项目评价管理'
+                },
+                component: () => import("@/modules/comment/comment.vue")
+            },
+            {
+                path: "shopComment",
+                name: "shopComment",
+                meta: {
+                    title: '门店评价管理'
+                },
+                component: () => import("@/modules/comment/shopComment.vue")
+            },
+            {
                 path: "commodity",
                 name: "commodity",
                 meta: {
                     title: '商品管理'
                 },
-                component: () => import("@/modules/commodity.vue")
+                component: () => import("@/modules/commodity/commodity.vue")
             }, {
                 path: "customer",
                 name: "customer",
                 meta: {
                     title: '顾客管理'
                 },
-                component: () => import("@/modules/customer.vue")
+                component: () => import("@/modules/customer/customer.vue")
             }, {
                 path: "distribution",
                 name: "distribution",
                 meta: {
                     title: '配送状态'
                 },
-                component: () => import("@/modules/distribution.vue")
+                component: () => import("@/modules/distribution/distribution.vue")
             }, {
                 path: "finance",
                 name: "finance",
                 meta: {
                     title: '财务状态'
                 },
-                component: () => import("@/modules/finance.vue")
+                component: () => import("@/modules/finance/finance.vue")
             }, {
                 path: "analysis",
                 name: "analysis",
                 meta: {
                     title: '经营分析'
                 },
-                component: () => import("@/modules/analysis.vue")
+                component: () => import("@/modules/analysis/analysis.vue")
             }, {
-                path: 'user',
-                name: 'user',
+                path: 'shop',
+                name: 'shop',
                 meta: {
-                    title: '个人中心'
+                    title: '门店管理'
                 },
-                component: () => import('@/modules/user.vue')
+                component: () => import('@/modules/shop/shop.vue')
             }, {
                 path: 'setting',
                 name: 'setting',
                 meta: {
                     title: '设置'
                 },
-                component: () => import('@/modules/setting.vue')
+                component: () => import('@/modules/setting/setting.vue')
+            }, {
+                path: 'user',
+                name: 'user',
+                meta: {
+                    title: '个人中心'
+                },
+                component: () => import('@/modules/user/user.vue')
             }
         ]
     }, {
