@@ -225,6 +225,66 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <el-card shadow="hover" style="height: 280px">
+          <template #header>
+            <div class="card-header">
+              <span style="font-weight: bold; font-size: 18px">订单情况</span>
+            </div>
+          </template>
+          <div class="text item">
+            <span>待支付订单：</span>
+            <span style="float: right; color: green">0</span>
+          </div>
+          <div class="text item">
+            <span>待发货订单：</span>
+            <span style="float: right; color: green">10</span>
+          </div>
+          <div class="text item">
+            <span>待收货订单：</span>
+            <span style="float: right; color: green">13</span>
+          </div>
+          <div class="text item">
+            <span>已成交订单数：</span>
+            <span style="float: right; color: green">26</span>
+          </div>
+          <div class="text item">
+            <span>交易失败：</span>
+            <span style="float: right; color: green">30</span>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card shadow="hover" style="height: 280px">
+          <template #header>
+            <div class="card-header">
+              <span style="font-weight: bold; font-size: 18px">商品情况</span>
+            </div>
+          </template>
+          <div class="text item">
+            <span>库存商品数：</span>
+            <span style="float: right; color: green">312</span>
+          </div>
+          <div class="text item">
+            <span>库存警告商品：</span>
+            <span style="float: right; color: green">10</span>
+          </div>
+          <div class="text item">
+            <span>上架商品：</span>
+            <span style="float: right; color: green">13</span>
+          </div>
+          <div class="text item">
+            <span>下架商品：</span>
+            <span style="float: right; color: green">26</span>
+          </div>
+          <div class="text item">
+            <span>商品评论：</span>
+            <span style="float: right; color: green">215</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -289,5 +349,23 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerColor {
+  background-color: aqua;
+}
+
+.text {
+  font-size: 16px;
+}
+
+.item {
+  margin-bottom: 18px;
 }
 </style>

@@ -9,13 +9,19 @@
   <link rel="stylesheet" href="https://at.alicdn.com/t/font_830376_qzecyukz0s.css">
 </head>
 
+
 <body>
   <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-      Please enable it to continue.</strong>
+        Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.5.7/layui.all.min.js"
+    type="application/javascript"></script>
+  <!--注意：腾讯地图Javascript API GL需要在有Web服务的情况下才能正常使用-->
+  <script
+    src="https://map.qq.com/api/gljs?v=1.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=tools,geometry"></script>
   <!-- built files will be auto injected -->
 </body>
 

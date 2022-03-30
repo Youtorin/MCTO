@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "element-plus": "1.0.2-beta.52",
+    "less-loader": "^5.0.0",
     "path": "^0.12.7",
     "vue": "^3.1.2",
     "vue-cropperjs": "^5.0.0",
