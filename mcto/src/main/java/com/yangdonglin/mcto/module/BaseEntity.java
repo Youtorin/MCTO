@@ -3,7 +3,9 @@ package com.yangdonglin.mcto.module;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
+@Data
 public class BaseEntity {
 
     @TableId(value = "ID", type = IdType.INPUT)

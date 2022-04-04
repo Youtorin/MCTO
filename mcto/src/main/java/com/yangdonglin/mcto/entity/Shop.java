@@ -1,5 +1,7 @@
 package com.yangdonglin.mcto.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yangdonglin.mcto.module.BaseEntity;
 import lombok.Data;
@@ -23,21 +25,31 @@ public class Shop extends BaseEntity {
     /**
      * 商店名称
      */
+    @TableField("shopname")
     private String shopname;
+
+    /**
+     * 商店账号
+     */
+    @TableField("shopAccount")
+    private String shopAccount;
 
     /**
      * 商店密码
      */
+    @TableField("password")
     private String password;
 
     /**
      * 手机号
      */
+    @TableField("mobile")
     private String mobile;
 
     /**
      * 邮箱
      */
+    @TableField("email")
     private String email;
 
 

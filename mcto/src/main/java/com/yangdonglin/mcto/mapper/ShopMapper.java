@@ -1,8 +1,10 @@
 package com.yangdonglin.mcto.mapper;
 
-import com.yangdonglin.mcto.entity.Shop;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yangdonglin.mcto.entity.Shop;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -15,4 +17,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ShopMapper extends BaseMapper<Shop> {
 
+    @Select("<script>" +
+            "select shopname,ShopAccount,password,password,email " +
+            "from Shop " +
+            "where ShopAccount=#{account}" +
+            "</script>")
+    Shop getShopAccount(@Param("account") String account);
 }

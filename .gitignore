@@ -37,3 +37,4 @@ Thumbs.db
 #vue ignore
 node_modules/
 dist/
+.history/

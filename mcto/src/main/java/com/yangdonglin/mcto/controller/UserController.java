@@ -4,6 +4,8 @@ import com.yangdonglin.mcto.module.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 
 /**
  * <p>
@@ -16,6 +18,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController extends BaseController {
-
 
 }

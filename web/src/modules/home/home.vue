@@ -288,23 +288,11 @@
   </div>
 </template>
 
-
 <script>
-import { GetModelList } from "@/api/index.js";
 import { messageShow } from "@/assets/js/Common.js";
 export default {
   name: "dashboard",
-  mounted: function () {
-    GetModelList()
-      .then((res) => {
-        if (res.success) {
-          this.table = res.success;
-        }
-      })
-      .catch((res) => {
-        messageShow("error", "查找失败");
-      });
-  },
+  mounted: function () {},
   data() {
     return {
       table: "",
