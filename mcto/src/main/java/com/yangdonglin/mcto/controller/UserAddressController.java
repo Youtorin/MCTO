@@ -26,7 +26,7 @@ public class UserAddressController extends BaseController {
     UserAddressService UserAddressService;
 
     @PostMapping("/getList")
-    public AjaxResponse getList(){
+    public AjaxResponse getList(@RequestBody UserAddress param){
         UserAddress result = UserAddressService.getById('1');
         System.out.println(111);
         if(result!=null){
@@ -35,7 +35,6 @@ public class UserAddressController extends BaseController {
         }else {
             return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);
         }
-
     }
     @PostMapping("/sayHello")
     public String sayHello() {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-02-21
  */
 @RestController
-@RequestMapping("/-food")
+@RequestMapping("/food")
 public class FoodController extends BaseController {
 
 }
