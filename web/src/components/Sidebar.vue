@@ -67,8 +67,20 @@ export default {
         title: "订单管理",
         subs: [
           {
+            index: "/api/dashboard/orderlist",
+            title: "订单列表",
+          },
+          {
             index: "/api/dashboard/order",
             title: "待办订单管理",
+          },
+          {
+            index: "/api/dashboard/retrievalorder",
+            title: "出库订单管理",
+          },
+          {
+            index: "/api/dashboard/refundorder",
+            title: "退款订单管理",
           },
         ],
       },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card
@@ -284,14 +284,26 @@
           </div>
         </el-card>
       </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover" style="height: 280px">
+          <schart
+            ref="bar"
+            class="schart"
+            canvasId="bar"
+            :options="options"
+          ></schart>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 import { messageShow } from "@/assets/js/Common.js";
+import Schart from "vue-schart";
 export default {
-  name: "dashboard",
+  name: "home",
+  components: { Schart },
   mounted: function () {},
   data() {
     return {
@@ -306,6 +318,28 @@ export default {
         total: 4312, //商品总数
         foodNum: 312, //商家商品数
         foodCate: 8,
+      },
+      options: {
+        type: "bar",
+        title: {
+          text: "最近一周各品类销售图",
+        },
+        xRorate: 25,
+        labels: ["周一", "周二", "周三", "周四", "周五"],
+        datasets: [
+          {
+            label: "家电",
+            data: [234, 278, 270, 190, 230],
+          },
+          {
+            label: "百货",
+            data: [164, 178, 190, 135, 160],
+          },
+          {
+            label: "食品",
+            data: [144, 198, 150, 235, 120],
+          },
+        ],
       },
     };
   },
@@ -355,5 +389,11 @@ export default {
 
 .item {
   margin-bottom: 18px;
+}
+
+.schart {
+  width: 100%;
+  height: 280px;
+  text-align: center;
 }
 </style>

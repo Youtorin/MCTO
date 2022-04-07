@@ -1,12 +1,11 @@
-import { createApp } from 'vue'
-import App from './shared//App.vue'
-import router from './router'
-import store from './store'
-import installElementPlus from './plugins/element'
-import './assets/css/icon.css'
-const app = createApp(App)
-installElementPlus(app)
-app
-    .use(store)
-    .use(router)
-    .mount('#app')
+import { createApp } from "vue";
+import App from "./shared//App.vue";
+import router from "./router";
+import store from "./store";
+import installElementPlus from "./plugins/element";
+import "./assets/css/icon.css";
+import "./assets/css/common.css";
+import "./assets/css/newStyle.css";
+const app = createApp(App);
+installElementPlus(app);
+app.use(store).use(router).mount("#app");

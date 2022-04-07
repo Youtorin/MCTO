@@ -1,0 +1,203 @@
+CREATE TABLE `Food` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `shop_id` varchar(36) NOT NULL DEFAULT '0' COMMENT '商店ID',
+  `cate_id` varchar(36) DEFAULT '0' COMMENT '分类ID',
+  `title` varchar(50) DEFAULT NULL COMMENT '食品名字',
+  `desc` varchar(100) DEFAULT NULL COMMENT '描述',
+  `cover` varchar(500) DEFAULT NULL COMMENT '食品封面图',
+  `origin_price` decimal(10,0) DEFAULT '0' COMMENT '原价',
+  `sell_price` decimal(10,0) DEFAULT '0' COMMENT '售价',
+  `discount` decimal(10,0) DEFAULT '10' COMMENT '折扣',
+  `like` int(11) DEFAULT '0' COMMENT '点赞',
+  `limit_num` int(11) DEFAULT '0' COMMENT '限购数量',
+  `option` varchar(500) DEFAULT NULL COMMENT '规格选项',
+  `total_sales` int(11) DEFAULT NULL COMMENT '总销量',
+  `month_sales` int(11) DEFAULT NULL COMMENT '月销量',
+  `praise_rate` float DEFAULT '100' COMMENT '好评率',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜品信息表';
+
+CREATE TABLE `FoodCategory` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `shop_id` varchar(36) DEFAULT '0' COMMENT '商店ID',
+  `name` varchar(50) DEFAULT NULL COMMENT '分类类型',
+  `desc` varchar(500) DEFAULT NULL COMMENT '描述',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='食品分类表';
+
+CREATE TABLE `Order` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `order_id` varchar(36) NOT NULL COMMENT '订单ID',
+  `user_id` varchar(36) DEFAULT '0' COMMENT '用户ID',
+  `shop_id` varchar(36) DEFAULT '0' COMMENT '商铺ID',
+  `send_cost` decimal(10,0) DEFAULT '0' COMMENT '配送费',
+  `total_money` decimal(10,0) DEFAULT '0' COMMENT '总价',
+  `pay_money` decimal(10,0) DEFAULT '0' COMMENT '实付金额',
+  `demand_time` int(11) DEFAULT '0' COMMENT '限定时间',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单主表';
+
+CREATE TABLE `OrderComment` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `order_id` varchar(36) DEFAULT NULL COMMENT '订单ID',
+  `user_id` varchar(36) DEFAULT '0' COMMENT '用户ID',
+  `content` varchar(500) DEFAULT NULL COMMENT '评论内容',
+  `images` varchar(1000) DEFAULT NULL COMMENT '评论图片',
+  `num_praise` int(11) DEFAULT '0' COMMENT '点赞次数',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单--评论';
+
+CREATE TABLE `OrderDetail` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `order_id` varchar(36) NOT NULL COMMENT '订单ID',
+  `user_username` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `user_mobile` varchar(20) DEFAULT NULL COMMENT '用户联系电话',
+  `user_address_id` varchar(36) DEFAULT '0' COMMENT '用户地址ID',
+  `user_longitude` varchar(20) DEFAULT NULL COMMENT '经度',
+  `user_latitude` varchar(20) DEFAULT NULL COMMENT '纬度',
+  `user_address` varchar(500) DEFAULT NULL COMMENT '用户详细地址',
+  `shop_shopname` varchar(20) DEFAULT NULL COMMENT '商铺名字',
+  `shop_mobile` varchar(20) DEFAULT NULL COMMENT '商铺联系电话',
+  `shop_address` varchar(500) DEFAULT NULL COMMENT '商铺详细地址',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
+
+CREATE TABLE `OrderFood` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `order_id` varchar(36) DEFAULT NULL COMMENT '订单ID',
+  `shop_id` varchar(36) DEFAULT '0' COMMENT '商铺ID',
+  `shopname` varchar(50) DEFAULT NULL COMMENT '商铺名称',
+  `food_id` varchar(36) DEFAULT '0' COMMENT '商品ID',
+  `title` varchar(50) DEFAULT NULL COMMENT '商品标题',
+  `cover` varchar(500) DEFAULT NULL COMMENT '商品封面',
+  `sell_price` decimal(10,0) DEFAULT '0' COMMENT '售价',
+  `number` int(11) DEFAULT '0' COMMENT '下单数量',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单商品详情表';
+
+CREATE TABLE `OrderRefund` (
+  `id` varchar(36) NOT NULL COMMENT '主键',
+  `order_id` varchar(36) DEFAULT NULL COMMENT '订单ID',
+  `user_id` varchar(36) DEFAULT '0' COMMENT '用户ID',
+  `username` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `pay_money` decimal(10,0) DEFAULT '0' COMMENT '需要退回的款项',
+  `refund_reason` varchar(500) DEFAULT NULL COMMENT '退款原因',
+  `apply_time` int(11) DEFAULT '0' COMMENT '申请时间',
+  `handle_time` int(11) DEFAULT '0' COMMENT '卖家处理时间',
+  `finish_time` int(11) DEFAULT '0' COMMENT '退款完成时间',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单--退款处理';
+
+CREATE TABLE `Shop` (
+  `id` varchar(36) NOT NULL COMMENT '编号主键',
+  `shopname` varchar(50) DEFAULT NULL COMMENT '商店名称',
+  `ShopAccount` varchar(255) DEFAULT NULL COMMENT '商店账号',
+  `password` varchar(50) DEFAULT NULL COMMENT '商店密码',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家登录表';
+
+CREATE TABLE `ShopInfo` (
+  `id` varchar(36) NOT NULL COMMENT '编号主键',
+  `shop_id` varchar(36) DEFAULT NULL COMMENT '商店id',
+  `shopname` varchar(50) DEFAULT NULL COMMENT '商店名称',
+  `contact_man` varchar(20) DEFAULT NULL COMMENT '联系人',
+  `contact_mobile` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `cateid` int(11) DEFAULT '0' COMMENT '门店类型',
+  `begin_time` int(11) DEFAULT '0' COMMENT '营业开始时间',
+  `end_time` int(11) DEFAULT '0' COMMENT '营业结束时间',
+  `store_img` varchar(500) DEFAULT NULL COMMENT '门店图片',
+  `instore_img` varchar(500) DEFAULT NULL COMMENT '店内图片',
+  `logo_img` varchar(500) DEFAULT NULL COMMENT 'logo图片',
+  `province` varchar(20) DEFAULT NULL COMMENT '省',
+  `city` varchar(20) DEFAULT NULL COMMENT '市',
+  `district` varchar(20) DEFAULT NULL COMMENT '区',
+  `longitude` varchar(20) DEFAULT NULL COMMENT '经度',
+  `latitude` varchar(20) DEFAULT NULL COMMENT '纬度',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '外卖电话',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `notice` varchar(500) DEFAULT NULL COMMENT '商家公告',
+  `score` float DEFAULT '0' COMMENT '平均评分',
+  `send_time` varchar(50) DEFAULT NULL COMMENT '配送时间',
+  `send_cost` decimal(10,0) DEFAULT '0' COMMENT '配送费用',
+  `floor_send_cost` decimal(10,0) DEFAULT '0' COMMENT '起送消费',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商铺信息表';
+
+CREATE TABLE `User` (
+  `id` varchar(36) NOT NULL COMMENT '编号主键',
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(50) DEFAULT NULL COMMENT '用户密码',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `wallet` decimal(10,0) DEFAULT '0' COMMENT '钱包',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `truename` varchar(50) DEFAULT NULL COMMENT '用户真实姓名',
+  `gender` varchar(10) DEFAULT NULL COMMENT '性别',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录表';
+
+CREATE TABLE `UserAddress` (
+  `id` varchar(36) NOT NULL COMMENT '编号主键',
+  `user_id` varchar(36) DEFAULT NULL COMMENT '用户id',
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `gender` varchar(10) DEFAULT NULL COMMENT '性别',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `province` varchar(50) DEFAULT NULL COMMENT '省',
+  `city` varchar(50) DEFAULT NULL COMMENT '市',
+  `district` varchar(50) DEFAULT NULL COMMENT '区',
+  `longitude` varchar(20) DEFAULT NULL COMMENT '经度',
+  `latitude` varchar(20) DEFAULT NULL COMMENT '维度',
+  `address` varchar(20) DEFAULT NULL COMMENT '详细地址',
+  `street` varchar(20) DEFAULT NULL COMMENT '街道门牌号',
+  `remark` varchar(20) DEFAULT NULL COMMENT '备注',
+  `is_Default` tinyint(4) DEFAULT '0' COMMENT '是否默认地址',
+  `CreateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `ViewOrder` int(11) DEFAULT NULL COMMENT '显示序号',
+  `Status` int(11) DEFAULT NULL COMMENT '状态（1-启用 0-禁用 -1-已删除）',
+  `TimeStamp` timestamp NULL DEFAULT NULL COMMENT '记录更新时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户配送地址表';
