@@ -5,7 +5,45 @@
     class="background-6F9 eig-mian-doc"
     v-loading="loading"
   >
-    <el-main class="wnw-main">
+    <el-header height="100px">
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <el-card
+            shadow="hover"
+            style="height: 100px; background-color: rgba(54, 207, 202)"
+          >
+            <el-row :gutter="10">
+              <el-col :span="6"
+                ><i
+                  class="el-icon-suitcase"
+                  style="font-size: 65px; margin-left: 20px"
+                ></i
+              ></el-col>
+              <el-col :span="18">
+                <el-row>
+                  <el-col :span="24" class="elRowText"
+                    ><span>¥ 34522</span></el-col
+                  >
+                </el-row>
+                <el-row>
+                  <el-col
+                    :span="24"
+                    style="
+                      text-align: center;
+                      color: white;
+                      margin-top: -5px;
+                      font-size: 14px;
+                    "
+                    ><span>今日销售总额</span></el-col
+                  >
+                </el-row>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-main class="wnw-main" style="margin-top: 20px">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column
           type="index"

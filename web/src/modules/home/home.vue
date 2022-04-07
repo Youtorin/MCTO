@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <el-main>
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card
@@ -234,7 +234,7 @@
             </div>
           </template>
           <div class="text item">
-            <span>待支付订单：</span>
+            <span>全部订单：</span>
             <span style="float: right; color: green">0</span>
           </div>
           <div class="text item">
@@ -295,7 +295,7 @@
         </el-card>
       </el-col>
     </el-row>
-  </div>
+  </el-main>
 </template>
 
 <script>
