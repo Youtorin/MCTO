@@ -216,7 +216,7 @@ a {
   border-right-color: #004a86;
 }
 
-*:not(.of-form) > .el-form .el-form-item__label {
+*:not(.of-form)>.el-form .el-form-item__label {
   padding: 0 8px 0 0;
   line-height: 36px !important;
 }
@@ -283,7 +283,7 @@ a {
   border-color: #004a86;
 }
 
-.el-checkbox__input.is-checked + .el-checkbox__label {
+.el-checkbox__input.is-checked+.el-checkbox__label {
   color: #004a86;
 }
 
@@ -303,7 +303,7 @@ a {
   top: 0px;
 }
 
-*:not(.of-form) > .el-form .el-checkbox-group {
+*:not(.of-form)>.el-form .el-checkbox-group {
   height: 22px;
 }
 
@@ -332,7 +332,7 @@ a {
   background: #fff;
 }
 
-.el-radio__input.is-checked + .el-radio__label {
+.el-radio__input.is-checked+.el-radio__label {
   color: #004a86;
 }
 
@@ -341,7 +341,7 @@ a {
   height: 14px;
 }
 
-.wn-radio-xs + .wn-radio-xs {
+.wn-radio-xs+.wn-radio-xs {
   margin-left: 20px;
 }
 
@@ -377,7 +377,7 @@ a {
 /**
   按钮
 */
-.wn-button-group > .el-button {
+.wn-button-group>.el-button {
   height: 34px;
   background-color: #fff;
   line-height: 0 !important;
@@ -426,7 +426,7 @@ a {
   padding-right: 20px;
 }
 
-.wn-button + .wn-button {
+.wn-button+.wn-button {
   margin-left: 5px;
 }
 
@@ -629,16 +629,16 @@ a {
   height: calc(100% - 40px);
 }
 
-.file_upload > .el-upload {
+.file_upload>.el-upload {
   width: 100%;
   height: 140px;
 }
 
-.file_upload > .el-upload-list {
+.file_upload>.el-upload-list {
   max-height: 240px;
 }
 
-.file_upload > .el-upload > .el-upload-dragger {
+.file_upload>.el-upload>.el-upload-dragger {
   width: 100%;
   height: 100%;
 }
@@ -768,8 +768,7 @@ a {
   float: left;
   height: 44px;
   padding-left: 42px;
-  background: url(../../../assets/img/wn-icons/wn-notice-top.png) no-repeat 21px
-    center;
+  background: url(../../../assets/img/wn-icons/wn-notice-top.png) no-repeat 21px center;
   font-size: 14px;
   color: #333;
   line-height: 44px;
@@ -786,10 +785,7 @@ a {
   margin-right: 64px;
 }
 
-.wn-header-notice
-  .wn-header-noticet
-  .wn-header-notict-right
-  .wn-header-notict-btn {
+.wn-header-notice .wn-header-noticet .wn-header-notict-right .wn-header-notict-btn {
   float: left;
   line-height: 44px;
   font-size: 12px;
@@ -797,17 +793,11 @@ a {
   cursor: pointer;
 }
 
-.wn-header-notice
-  .wn-header-noticet
-  .wn-header-notict-right
-  .wn-header-notict-btn:hover {
+.wn-header-notice .wn-header-noticet .wn-header-notict-right .wn-header-notict-btn:hover {
   color: #004a86;
 }
 
-.wn-header-notice
-  .wn-header-noticet
-  .wn-header-notict-right
-  .wn-header-notict-line {
+.wn-header-notice .wn-header-noticet .wn-header-notict-right .wn-header-notict-line {
   float: left;
   height: 13px;
   border-left: 1px solid #efefef;
@@ -884,8 +874,7 @@ a {
   font-size: 14px;
   line-height: 140px;
   color: #999;
-  background: url(../../../assets/img/wn-icons/wn-notice-null.png) no-repeat
-    15px 40px;
+  background: url(../../../assets/img/wn-icons/wn-notice-null.png) no-repeat 15px 40px;
 }
 
 /**
@@ -1102,8 +1091,7 @@ textarea:-ms-input-placeholder {
 }
 
 .wn-input-group {
-  margin: 5px 0;
-  width: 240px !important;
+  width: 270px !important;
   margin-right: 10px;
 }
 
@@ -1158,7 +1146,7 @@ textarea:-ms-input-placeholder {
   border-bottom: solid 1px #d2d2d2;
 }
 
-.el-table--enable-row-hover .el-table__body tr:hover > td {
+.el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: #eeeeee;
 }
 
@@ -1179,8 +1167,7 @@ textarea:-ms-input-placeholder {
 }
 
 .wn-table .wn-tableimgf {
-  background: url(../../../assets/img/wn-icons/wn-juan.png) no-repeat center
-    center;
+  background: url(../../../assets/img/wn-icons/wn-juan.png) no-repeat center center;
   background-size: contain;
   width: 20px;
   height: 20px;
@@ -1192,8 +1179,7 @@ textarea:-ms-input-placeholder {
 }
 
 .wn-table .wn-tableimgs {
-  background: url(../../../assets/img/wn-icons/wn-jian.png) no-repeat center
-    center;
+  background: url(../../../assets/img/wn-icons/wn-jian.png) no-repeat center center;
   background-size: contain;
   width: 20px;
   height: 20px;
@@ -1208,7 +1194,7 @@ textarea:-ms-input-placeholder {
   padding: 3px 0;
 }
 
-.wn-table th > .cell {
+.wn-table th>.cell {
   color: #666666;
   font-weight: 400;
 }
@@ -1295,9 +1281,7 @@ textarea:-ms-input-placeholder {
   color: transparent;
 }
 
-.wn-treeselect
-  .vue-treeselect__option-arrow-container:hover
-  .vue-treeselect__option-arrow {
+.wn-treeselect .vue-treeselect__option-arrow-container:hover .vue-treeselect__option-arrow {
   color: transparent;
 }
 
@@ -1305,9 +1289,7 @@ textarea:-ms-input-placeholder {
   color: #616161 !important;
 }
 
-.wn-treeselect
-  .vue-treeselect--focused:not(.vue-treeselect--open)
-  .vue-treeselect__control {
+.wn-treeselect .vue-treeselect--focused:not(.vue-treeselect--open) .vue-treeselect__control {
   border-color: #fff;
   box-shadow: 0 0 0 0 #fff;
 }
@@ -1416,8 +1398,7 @@ textarea:-ms-input-placeholder {
   width: 15px;
   height: 15px;
   margin-right: 10px;
-  background: url(../../../assets/img/wn-icons/wn-blankbox.png) no-repeat center
-    center;
+  background: url(../../../assets/img/wn-icons/wn-blankbox.png) no-repeat center center;
   display: inline-block;
   position: relative;
   top: 2px;
@@ -1438,8 +1419,7 @@ textarea:-ms-input-placeholder {
   width: 15px;
   height: 15px;
   margin-right: 10px;
-  background: url(../../../assets/img/wn-icons/wn-blankbox.png) no-repeat center
-    center;
+  background: url(../../../assets/img/wn-icons/wn-blankbox.png) no-repeat center center;
   display: inline-block;
   position: relative;
   top: 2px;
@@ -1876,8 +1856,7 @@ top: 1px;
 
 .wn-view-dropcon.wn-on {
   border-color: #004a86;
-  background: #fff url(../../../assets/img/wn-icons/wn-view-on.png) no-repeat
-    right bottom;
+  background: #fff url(../../../assets/img/wn-icons/wn-view-on.png) no-repeat right bottom;
 }
 
 .wn-view-menu {
@@ -2083,8 +2062,7 @@ top: 1px;
   margin-top: -200px;
   width: 350px;
   padding-top: 80px;
-  background: url(../../../assets/img/wn-icons/wn-view-nopermise.png) no-repeat
-    center top;
+  background: url(../../../assets/img/wn-icons/wn-view-nopermise.png) no-repeat center top;
 }
 
 .wn-view-nopormise .wn-view-nopermise-tt {
@@ -2233,7 +2211,7 @@ top: 1px;
   display: none;
 }
 
-.wn-function .el-tag > span {
+.wn-function .el-tag>span {
   /*display: block;*/
   float: left;
   /*width: calc(100% - 26px);*/
@@ -2347,11 +2325,11 @@ top: 1px;
   margin: 5px 0;
 }
 
-.el-menu--horizontal > .el-menu-item.is-active {
+.el-menu--horizontal>.el-menu-item.is-active {
   border-bottom: solid 2px #004f82;
 }
 
-.el-menu--horizontal > .el-menu-item {
+.el-menu--horizontal>.el-menu-item {
   line-height: 50px;
   height: 50px;
   width: 114px;
@@ -2361,7 +2339,7 @@ top: 1px;
   color: #444444 !important;
 }
 
-.el-menu--horizontal > .el-menu-item.is-active {
+.el-menu--horizontal>.el-menu-item.is-active {
   font-weight: bold;
   color: #10487f !important;
 }
@@ -2766,8 +2744,7 @@ top: 1px;
 }
 
 .wn-todo-headimg {
-  background: url(../../../assets/img/wn-icons/wn-overtime.png) no-repeat center
-    center;
+  background: url(../../../assets/img/wn-icons/wn-overtime.png) no-repeat center center;
   width: 13px;
   height: 13px;
   background-size: cover;
@@ -2955,8 +2932,7 @@ top: 1px;
 .wn-edit-card:hover,
 .wn-edit-card-on {
   border-color: #004a86;
-  background: url(../../../assets/img/wn-icons/wn-view-on.png) no-repeat right
-    bottom;
+  background: url(../../../assets/img/wn-icons/wn-view-on.png) no-repeat right bottom;
 }
 
 .wn-edit-btna.el-button {
@@ -2965,16 +2941,14 @@ top: 1px;
   padding-left: 52px;
   border-color: #e16a12 !important;
   color: #fff !important;
-  background: #e16a12 url(../../../assets/img/wn-icons/wn-edit-icon.png)
-    no-repeat 70px center !important;
+  background: #e16a12 url(../../../assets/img/wn-icons/wn-edit-icon.png) no-repeat 70px center !important;
 }
 
 .wn-edit-txticon {
   padding: 3px 0 3px 36px;
   font-size: 12px;
   color: #666;
-  background: url(../../../assets/img/wn-icons/wn-edit-iconb.png) no-repeat 15px
-    center;
+  background: url(../../../assets/img/wn-icons/wn-edit-iconb.png) no-repeat 15px center;
 }
 
 .wn-edit-line {
@@ -3164,7 +3138,7 @@ top: 1px;
   overflow: hidden;
 }
 
-.wn-form-tagbox > .iconfont {
+.wn-form-tagbox>.iconfont {
   position: absolute;
   top: 0;
   right: 5px;
@@ -3182,7 +3156,7 @@ top: 1px;
   color: #8cbcef;
 }
 
-.wn-form-tagbox .el-tag + .el-tag {
+.wn-form-tagbox .el-tag+.el-tag {
   margin-left: 5px;
 }
 
@@ -3404,14 +3378,14 @@ top: 1px;
   padding-top: 10px;
 }
 
-.wnw-required > label:before {
+.wnw-required>label:before {
   content: "*";
   color: #f00;
   margin-right: 4px;
   font-size: 14px;
 }
 
-.el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label:before {
+.el-form-item.is-required:not(.is-no-asterisk)>.el-form-item__label:before {
   font-size: 14px;
   color: #f00;
 }
@@ -3745,19 +3719,16 @@ wn-view-bottom .wnw-word-iframe {
 }
 
 .cmchange:hover {
-  background: #004a86 url(../../../assets/img/wn-icons/c-changebai.png)
-    no-repeat 135px center;
+  background: #004a86 url(../../../assets/img/wn-icons/c-changebai.png) no-repeat 135px center;
 }
 
 .cmtrust {
-  background: url(../../../assets/img/wn-icons/c-trust.png) no-repeat 135px
-    center;
+  background: url(../../../assets/img/wn-icons/c-trust.png) no-repeat 135px center;
   cursor: pointer;
 }
 
 .cmtrust:hover {
-  background: #004a86 url(../../../assets/img/wn-icons/c-trustbai.png) no-repeat
-    135px center;
+  background: #004a86 url(../../../assets/img/wn-icons/c-trustbai.png) no-repeat 135px center;
 }
 
 .cmout {
@@ -3766,8 +3737,7 @@ wn-view-bottom .wnw-word-iframe {
 }
 
 .cmout:hover {
-  background: #004a86 url(../../../assets/img/wn-icons/c-outbai.png) no-repeat
-    135px center;
+  background: #004a86 url(../../../assets/img/wn-icons/c-outbai.png) no-repeat 135px center;
 }
 
 .cmset {
@@ -3776,8 +3746,7 @@ wn-view-bottom .wnw-word-iframe {
 }
 
 .cmset:hover {
-  background: #004a86 url(../../../assets/img/wn-icons/c-setbai.png) no-repeat
-    135px center;
+  background: #004a86 url(../../../assets/img/wn-icons/c-setbai.png) no-repeat 135px center;
 }
 
 .cmpopin {
@@ -3904,8 +3873,7 @@ wn-view-bottom .wnw-word-iframe {
   width: 100%;
   height: 100%;
   position: fixed;
-  background: url(../../../assets/img/wn-icons/cm-attention.png) no-repeat 60px
-    92%;
+  background: url(../../../assets/img/wn-icons/cm-attention.png) no-repeat 60px 92%;
   z-index: 1000;
 }
 

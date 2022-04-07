@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <el-main style="height: 100%; background-color: rgb(244, 246, 249)">
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card
@@ -348,52 +348,4 @@ export default {
 </script>
 
 <style scoped>
-.el-card {
-  border-radius: 15px;
-}
-.el-row {
-  margin-bottom: 20px;
-}
-
-.elRowText {
-  text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
-  margin-top: -10px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.headerColor {
-  background-color: aqua;
-}
-
-.text {
-  font-size: 16px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.schart {
-  width: 100%;
-  height: 280px;
-  text-align: center;
-}
 </style>
