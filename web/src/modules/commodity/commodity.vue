@@ -66,13 +66,9 @@
       <el-header>
         <el-form :inline="true" :model="param" class="user-search">
           <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
-            <el-col :span="1">
+            <el-col :span="24" align="right">
               <el-button type="danger" size="small">批量删除</el-button>
-            </el-col>
-            <el-col :span="1" class="wnw-ml-20">
               <el-button type="primary" size="small">添加商品</el-button>
-            </el-col>
-            <el-col :span="7" align="right">
               <el-input
                 v-model.trim="keyword"
                 maxlength="50"

@@ -11,7 +11,7 @@
       style="margin-bottom: 10px"
     >
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+      <el-breadcrumb-item>订单列表</el-breadcrumb-item>
     </el-breadcrumb>
     <div height="100px" style="background-color: white">
       <el-row :gutter="20" style="margin: 5px 0">
@@ -130,7 +130,7 @@
     <el-header>
       <el-form :inline="true" :model="param" class="user-search">
         <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
-          <el-col :span="5" align="right">
+          <el-col :span="24" align="right">
             <el-input
               v-model.trim="keyword"
               maxlength="50"
@@ -140,7 +140,7 @@
             </el-input>
             <el-button
               icon="el-icon-search"
-              style="margin: 8px 0; margin-right: 35px"
+              style="float: left; margin: 5px 0px"
               type="success"
               size="mini"
               @click="Search"
