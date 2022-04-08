@@ -116,14 +116,6 @@ const routes = [
         component: () => import("@/modules/shop/shop.vue"),
       },
       {
-        path: "setting",
-        name: "setting",
-        meta: {
-          title: "设置",
-        },
-        component: () => import("@/modules/setting/setting.vue"),
-      },
-      {
         path: "user",
         name: "user",
         meta: {

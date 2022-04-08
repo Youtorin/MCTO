@@ -1213,6 +1213,7 @@ textarea:-ms-input-placeholder {
   padding: 6px 0 !important;
   /*margin: 0 10px !important;*/
   box-sizing: content-box;
+  text-align: center;
 }
 
 .wn-treeselect {

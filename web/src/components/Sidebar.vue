@@ -129,11 +129,6 @@ export default {
         index: "/api/dashboard/shop",
         title: "门店管理",
       },
-      {
-        icon: "el-icon-lx-settings",
-        index: "/api/dashboard/setting",
-        title: "设置",
-      },
     ];
 
     const route = useRoute();
