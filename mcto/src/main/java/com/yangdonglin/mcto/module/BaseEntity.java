@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class BaseEntity {
 
-    @TableId(value = "ID", type = IdType.INPUT)
+    @TableId("ID")
     public String id;
 
     @TableField("createTime")

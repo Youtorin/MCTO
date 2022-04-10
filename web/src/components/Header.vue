@@ -33,10 +33,7 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <a
-                href="https://github.com/lin-xin/vue-manage-system"
-                target="_blank"
-              >
+              <a href="https://github.com/q3531024747/MCTO" target="_blank">
                 <el-dropdown-item>项目仓库</el-dropdown-item>
               </a>
               <el-dropdown-item command="user">个人中心</el-dropdown-item>
@@ -56,7 +53,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default {
   setup() {
-    const username = localStorage.getItem("ms_username");
+    const username = localStorage.getItem("currentUserName");
     const message = 2;
 
     const store = useStore();
@@ -76,7 +73,7 @@ export default {
     const router = useRouter();
     const handleCommand = (command) => {
       if (command == "loginout") {
-        localStorage.removeItem("ms_username");
+        localStorage.removeItem("currentUser");
         router.push("login");
       } else if (command == "user") {
         router.push("user");

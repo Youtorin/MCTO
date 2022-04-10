@@ -52,5 +52,11 @@ public class Shop extends BaseEntity {
     @TableField("email")
     private String email;
 
+    /**
+     * 邮箱
+     */
+    @TableField("remark")
+    private String remark;
+
 
 }

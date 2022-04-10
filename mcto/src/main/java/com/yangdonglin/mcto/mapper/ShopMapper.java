@@ -18,7 +18,7 @@ import org.apache.ibatis.annotations.Select;
 public interface ShopMapper extends BaseMapper<Shop> {
 
     @Select("<script>" +
-            "select shopname,ShopAccount,password,password,email " +
+            "select id,shopname,ShopAccount,password,password,email " +
             "from Shop " +
             "where ShopAccount=#{account}" +
             "</script>")

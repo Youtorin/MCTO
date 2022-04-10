@@ -1,6 +1,10 @@
 package com.yangdonglin.mcto.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yangdonglin.mcto.module.BaseEntity;
 import lombok.Data;
@@ -19,7 +23,6 @@ import lombok.EqualsAndHashCode;
 @TableName("ShopInfo")
 public class Shopinfo extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
 
     /**
      * 商店id
@@ -49,12 +52,12 @@ public class Shopinfo extends BaseEntity {
     /**
      * 营业开始时间
      */
-    private Integer beginTime;
+    private String beginTime;
 
     /**
      * 营业结束时间
      */
-    private Integer endTime;
+    private String endTime;
 
     /**
      * 门店图片
@@ -85,6 +88,11 @@ public class Shopinfo extends BaseEntity {
      * 区
      */
     private String district;
+
+    /**
+     * 详细地址
+     */
+    private String address;
 
     /**
      * 经度

@@ -34,7 +34,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="店内图片" prop="instoreImg">
+        <el-form-item label="店内图片" prop="instoreImg" v-if="false">
           <el-upload
             action=""
             :auto-upload="false"
@@ -53,8 +53,8 @@
             />
           </el-dialog>
         </el-form-item>
-        <el-form-item label="门店名称" prop="name">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="门店名称" prop="shopname">
+          <el-input v-model="form.shopname"></el-input>
         </el-form-item>
 
         <el-form-item label="门店地址" prop="address">
@@ -63,9 +63,11 @@
               <el-cascader
                 size="large"
                 :options="options"
+                v-model="this.address"
                 :props="{ value: 'label' }"
-                value="label"
                 @change="handleChange"
+                :show-all-levels="false"
+                clearable
               >
               </el-cascader>
               <el-input
@@ -122,6 +124,8 @@
 
 <script>
 import { regionData } from "element-china-area-data";
+import { GetInfo, Edit } from "@/api/shopinfo.js";
+import { messageShow } from "@/assets/js/Common.js";
 
 export default {
   data() {
@@ -131,8 +135,10 @@ export default {
       options: regionData,
       dialogImageUrl: "",
       dialogVisible: false,
+      address: [],
       form: {
-        name: "",
+        id: localStorage.getItem("currentUserId"),
+        shopname: "",
         storeImg: "",
         instoreImg: [],
         contactMan: "",
@@ -147,21 +153,60 @@ export default {
         notice: "",
       },
       rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        shopname: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
         ],
       },
     };
   },
+  mounted() {
+    this.loaddata();
+  },
   methods: {
+    async loaddata() {
+      this.loading = true;
+      await GetInfo({ id: this.form.id })
+        .then((res) => {
+          if (res.success && res.result !== null) {
+            this.form = res.result;
+            if (
+              res.result.instoreImg === null ||
+              res.result.instoreImg === ""
+            ) {
+              this.form.instoreImg = [];
+            } else {
+              this.form.instoreImg = JSON.parse(res.result.instoreImg);
+            }
+            this.address.push(res.result.province);
+            this.address.push(res.result.city);
+            this.address.push(res.result.district);
+            this.loading = false;
+            console.log(this.address);
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+    },
     save(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.form.instoreImg = JSON.stringify(this.form.instoreImg);
+          this.loading = true;
+          Edit(this.form)
+            .then((res) => {
+              if (res.success) {
+                messageShow("success", "保存成功！");
+                this.loading = false;
+              }
+            })
+            .catch((err) => {
+              messageShow("error", "保存失败," + err.$message);
+              this.loading = false;
+            });
           console.log(this.form);
         } else {
-          console.log("error submit!!");
+          messageShow("error", "还有未填字段");
           return false;
         }
       });
@@ -173,6 +218,7 @@ export default {
       this.form.province = value[0];
       this.form.city = value[1];
       this.form.district = value[2];
+      console.log(this.address);
     },
     UploadChange(file, fileList) {
       const isJPG = file.raw.type === "image/jpeg";

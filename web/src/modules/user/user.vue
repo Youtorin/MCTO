@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="12">
+    <el-row>
+      <el-col :span="24">
         <el-card shadow="hover">
           <template #header>
             <div class="clearfix">
@@ -15,35 +15,63 @@
                 <i class="el-icon-lx-camerafill"></i>
               </span>
             </div>
-            <div class="info-name">{{ name }}</div>
-            <div class="info-desc">不可能！我的代码怎么可能会有bug！</div>
+            <div class="info-name">{{ form.shopname }}</div>
+            <span
+              class="info-desc"
+              v-if="form.remark !== '' && form.remark !== null"
+              >{{ form.remark }}</span
+            >
+            <span class="info-desc" v-else>还什么都没写...</span>
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card shadow="hover">
-          <template #header>
-            <div class="clearfix">
-              <span>账户编辑</span>
-            </div>
-          </template>
-          <el-form label-width="90px">
-            <el-form-item label="用户名："> {{ name }} </el-form-item>
-            <el-form-item label="旧密码：">
-              <el-input type="password" v-model="form.old"></el-input>
-            </el-form-item>
-            <el-form-item label="新密码：">
-              <el-input type="password" v-model="form.new"></el-input>
-            </el-form-item>
-            <el-form-item label="个人简介：">
-              <el-input v-model="form.desc"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">保存</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </el-col>
+    </el-row>
+    <el-row>
+      <el-container
+        style="height: 100%"
+        class="background-6F9 eig-mian-doc"
+        v-loading="loading"
+      >
+        <el-col :span="24">
+          <el-card shadow="hover">
+            <template #header>
+              <div class="clearfix">
+                <span>账户编辑</span>
+              </div>
+            </template>
+            <el-form
+              :model="form"
+              :rules="rules"
+              ref="form"
+              label-width="100px"
+            >
+              <el-form-item label="用户名" prop="shopname">
+                <el-input type="text" v-model="form.shopname"></el-input
+              ></el-form-item>
+
+              <el-form-item label="手机号" prop="mobile">
+                <el-input type="text" v-model="form.mobile"></el-input
+              ></el-form-item>
+
+              <el-form-item label="邮箱" prop="email">
+                <el-input type="text" v-model="form.email"></el-input
+              ></el-form-item>
+              <el-form-item label="旧密码" prop="oldPassword">
+                <el-input type="password" v-model="form.oldPassword"></el-input>
+              </el-form-item>
+              <el-form-item label="新密码" prop="newPassword">
+                <el-input type="password" v-model="form.newPassword"></el-input>
+              </el-form-item>
+              <el-form-item label="个人简介" prop="remark">
+                <el-input v-model="form.remark"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="save">保存</el-button>
+              </el-form-item>
+            </el-form>
+          </el-card>
+        </el-col>
+      </el-container>
     </el-row>
     <el-dialog title="裁剪图片" v-model="dialogVisible" width="600px">
       <vue-cropper
@@ -79,20 +107,85 @@ import { reactive, ref } from "vue";
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 import avatar from "@/assets/img/img.jpg";
+import { GetInfo, Edit } from "@/api/shop.js";
+import { messageShow } from "@/assets/js/Common.js";
 export default {
   name: "user",
   components: {
     VueCropper,
   },
+  data() {
+    return {
+      loading: false,
+      form: {
+        id: localStorage.getItem("currentUserId"),
+        shopname: "",
+        shopaccount: "",
+        oldPassword: "",
+        newPassword: "",
+        password: "",
+        mobile: "",
+        email: "",
+        remark: "",
+      },
+      rules: {
+        shopname: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+        ],
+        oldPassword: [
+          { required: true, message: "请输入旧密码", trigger: "blur" },
+        ],
+        newPassword: [
+          { required: true, message: "请输入新密码", trigger: "blur" },
+        ],
+      },
+    };
+  },
+  mounted() {
+    this.loaddata();
+  },
+  methods: {
+    save() {
+      this.$refs["form"].validate((valid) => {
+        if (valid) {
+          if (this.form.password !== this.form.oldPassword) {
+            messageShow("error", "旧密码错误");
+          } else {
+            this.form.password = this.form.newPassword;
+            this.loading = true;
+            Edit(this.form)
+              .then((res) => {
+                if (res.success) {
+                  messageShow("success", "保存成功！");
+                  this.loading = false;
+                }
+              })
+              .catch((err) => {
+                messageShow("error", "保存失败," + err.$message);
+                this.loading = false;
+              });
+          }
+        } else {
+          messageShow("error", "还有未填字段");
+          return false;
+        }
+      });
+    },
+    async loaddata() {
+      this.loading = true;
+      await GetInfo({ id: this.form.id })
+        .then((res) => {
+          if (res.success && res.result !== null) {
+            this.form = res.result;
+            this.loading = false;
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+    },
+  },
   setup() {
-    const name = localStorage.getItem("ms_username");
-    const form = reactive({
-      old: "",
-      new: "",
-      desc: "不可能！我的代码怎么可能会有bug！",
-    });
-    const onSubmit = () => {};
-
     const avatarImg = ref(avatar);
     const imgSrc = ref("");
     const cropImg = ref("");
@@ -128,9 +221,6 @@ export default {
     };
 
     return {
-      name,
-      form,
-      onSubmit,
       cropper,
       avatarImg,
       imgSrc,

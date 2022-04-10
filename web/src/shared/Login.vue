@@ -31,7 +31,6 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm()">登录</el-button>
         </div>
-        <p class="login-tips">Tips : 用户名和密码随便填。</p>
       </el-form>
     </div>
   </div>
@@ -70,7 +69,9 @@ export default {
             .then((res) => {
               if (res.success) {
                 messageShow("success", "登录成功");
-                localStorage.setItem("ms_username", param.shopAccount);
+                localStorage.setItem("currentUser", param.shopAccount);
+                localStorage.setItem("currentUserId", res.result.id);
+                localStorage.setItem("currentUserName", res.result.shopname);
                 router.push("/");
               }
             })
