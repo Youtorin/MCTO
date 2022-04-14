@@ -14,13 +14,7 @@
     </el-breadcrumb>
     <el-header></el-header>
     <el-main class="wnw-main">
-      <el-form
-        :model="form"
-        :rules="rules"
-        ref="form"
-        label-width="100px"
-        class="demo-form"
-      >
+      <el-form :model="form" :rules="rules" ref="form" label-width="100px">
         <el-form-item label="门店图片" prop="storeImg">
           <el-upload
             class="avatar-uploader"
@@ -71,7 +65,7 @@
               >
               </el-cascader>
               <el-input
-                style="width: 80%; padding: 0 10px"
+                style="width: 60%; padding: 0 10px"
                 placeholder="请输入详细地址"
                 v-model="form.address"
               ></el-input>

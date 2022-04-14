@@ -24,7 +24,7 @@ public class UserAddress extends BaseEntity {
     /**
      * 用户id
      */
-    @TableField("User_Id")
+    @TableField("UserId")
     private String userId;
 
     /**

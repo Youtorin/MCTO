@@ -165,5 +165,27 @@ export const dateParse = (dateStr) => {
   return dependedDate
 }
 
+export const dateFormat = (dateValue, fmt = 'YYYY-MM-DD') => {
+  if (!moment(dateValue).isValid()) {
+    console.warn('[dataFomat]warn: The input param "dataValue" is a invalid date!')
+    return dateValue
+  }
+  return moment(dateValue).format(fmt)
+}
+
+
 export const pagination = { rows: 999999999, page: 1 }
 
+const methods = {
+  FormatUTC2Local(date, format) {
+    if (date === '' || date === undefined) {
+      return ''
+    }
+    var f = format || 'YYYY-MM-DD HH:mm:ss'
+    return moment(date)
+      .add(store.getters.GetCurTimeZone, 'h')
+      .format(f)
+  }
+
+}
+export default methods

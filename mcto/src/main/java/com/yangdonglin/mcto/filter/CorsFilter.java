@@ -19,8 +19,7 @@ public class CorsFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        httpServletResponse.setHeader("Access-Control-Allow-Methods",
-                "POST, GET, OPTIONS, DELETE");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE");
         httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
         //允许自定义的请求头
         httpServletResponse.setHeader("Access-Control-Allow-Headers",

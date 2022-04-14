@@ -1,9 +1,10 @@
 package com.yangdonglin.mcto.module;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class BaseEntity {
@@ -12,13 +13,13 @@ public class BaseEntity {
     public String id;
 
     @TableField("createTime")
-    public String createTime;
+    public Date createTime;
 
     @TableField("viewOrder")
     public String viewOrder;
 
     @TableField("status")
-    public String status;
+    public Integer status;
 
     @TableField("timeStamp")
     public String timeStamp;

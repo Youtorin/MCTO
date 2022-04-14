@@ -123,7 +123,6 @@
               <el-image
                 style="width: 100px; height: 100px"
                 :src="row.cover"
-                :fit="fill"
               ></el-image>
             </template>
           </el-table-column>
