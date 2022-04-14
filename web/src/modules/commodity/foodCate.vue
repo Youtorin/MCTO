@@ -12,12 +12,15 @@
         style="margin-bottom: 10px"
       >
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>顾客管理</el-breadcrumb-item>
+        <el-breadcrumb-item>分类列表</el-breadcrumb-item>
       </el-breadcrumb>
       <el-header>
         <el-form :inline="true" :model="param" class="user-search">
           <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
             <el-col :span="24" align="right">
+              <el-button type="primary" size="small" @click="AddCate"
+                >新增分类</el-button
+              >
               <el-input
                 v-model.trim="param.keywords"
                 maxlength="50"
@@ -38,7 +41,7 @@
         </el-form>
       </el-header>
       <el-main class="wnw-main">
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" style="height: 100%">
           <el-table-column
             type="index"
             label="序号"
@@ -49,36 +52,20 @@
           >
           </el-table-column>
           <el-table-column
-            label="用户名"
-            prop="username"
+            label="分类名"
+            prop="name"
             align="center"
+            width="300px"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
-            label="手机号"
-            prop="mobile"
-            align="center"
+            label="描述"
+            prop="description"
+            header-align="center"
+            align="left"
           ></el-table-column>
           <el-table-column
-            label="真实姓名"
-            prop="truename"
-            align="center"
-          ></el-table-column>
-          <el-table-column
-            label="性别"
-            prop="gender"
-            align="center"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            label="邮箱"
-            prop="email"
-            align="center"
-            width="240px"
-            show-overflow-tooltip
-          ></el-table-column>
-          <el-table-column
-            label="加入时间"
+            label="创建时间"
             prop="createTime"
             align="center"
             width="160px"
@@ -87,31 +74,21 @@
               {{ FormatUTC2Local(scope.row.createTime) }}
             </template>
           </el-table-column>
-          <el-table-column
-            label="状态"
-            prop="status"
-            align="center"
-            width="100px"
-          >
-            <template #default="scope">
-              {{ statusFormat(scope.row.status) }}
-            </template>
-          </el-table-column>
           <el-table-column align="center" width="150px">
             <template #default="scope">
               <el-button
                 size="mini"
                 type="success"
                 round
-                @click="showDetails(scope.row.id)"
-                >查看</el-button
+                @click="edit(scope.row)"
+                >编辑</el-button
               >
               <el-button
                 size="mini"
                 type="danger"
                 round
                 @click="handleDelete(scope.row.id)"
-                >禁用</el-button
+                >删除</el-button
               >
             </template>
           </el-table-column>
@@ -133,12 +110,12 @@
         </el-row>
       </el-footer>
     </el-container>
-    <el-dialog v-model="outerVisible" title="用户信息详情" width="50%">
+    <el-dialog v-model="outerVisible" title="分类信息" width="50%">
       <el-main style="height: 50%">
         <template #default v-loading="boxLoading">
           <el-collapse v-model="actionvalue" accordion>
             <el-collapse-item
-              title="用户信息"
+              title="分类信息详情"
               name="1"
               class="wn-form-collapse"
             >
@@ -146,52 +123,19 @@
                 <el-form :model="form" label-width="100px">
                   <el-row>
                     <el-col :span="22">
-                      <el-form-item label="用户名" prop="username">
+                      <el-form-item label="分类名" prop="name">
                         <el-input
-                          readonly
                           type="text"
-                          v-model="form.username"
+                          v-model="form.name"
                         ></el-input></el-form-item
                     ></el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="22">
-                      <el-form-item label="手机号" prop="mobile">
+                      <el-form-item label="排序" prop="viewOrder">
                         <el-input
-                          readonly
                           type="text"
-                          v-model="form.mobile"
-                        ></el-input
-                      ></el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="真实姓名" prop="truename">
-                        <el-input
-                          readonly
-                          type="text"
-                          v-model="form.truename"
-                        ></el-input></el-form-item
-                    ></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="性别" prop="gender">
-                        <el-input
-                          readonly
-                          type="text"
-                          v-model="form.gender"
-                        ></el-input></el-form-item
-                    ></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="邮箱" prop="email">
-                        <el-input
-                          readonly
-                          type="text"
-                          v-model="form.email"
+                          v-model="form.viewOrder"
                         ></el-input></el-form-item
                     ></el-col>
                   </el-row>
@@ -200,53 +144,23 @@
                       <el-form-item label="创建时间" prop="createtime">
                         <el-date-picker
                           v-model="form.createTime"
-                          readonly
                           type="date"
-                          placeholder="请选择日期" /></el-form-item
+                          placeholder="请选择日期"
+                        >
+                        </el-date-picker> </el-form-item
                     ></el-col>
                   </el-row>
+                  <el-row>
+                    <el-col :span="22">
+                      <el-form-item label="描述" prop="description">
+                        <el-input
+                          type="text"
+                          v-model="form.description"
+                        ></el-input
+                      ></el-form-item>
+                    </el-col>
+                  </el-row>
                 </el-form>
-              </el-main>
-            </el-collapse-item>
-
-            <el-collapse-item
-              title="地址列表"
-              name="2"
-              class="wn-form-collapse"
-            >
-              <el-main class="wnw-main">
-                <el-table v-model="userAddressList" style="width: 100%">
-                  <el-table-column
-                    type="index"
-                    label="序号"
-                    header-align="center"
-                    align="center"
-                    class-name="wn-tableindex"
-                    width="40px"
-                  >
-                  </el-table-column>
-                  <el-table-column
-                    label="省"
-                    prop="province"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="市"
-                    prop="city"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="区"
-                    prop="district"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="详细地址"
-                    prop="address"
-                    align="left"
-                    show-overflow-tooltip
-                  ></el-table-column>
-                </el-table>
               </el-main>
             </el-collapse-item>
           </el-collapse>
@@ -254,7 +168,8 @@
       </el-main>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="outerVisible = false">关闭</el-button>
+          <el-button @click="save" type="primary" size="mini">保存</el-button>
+          <el-button @click="outerVisible = false" size="mini">关闭</el-button>
         </div>
       </template>
     </el-dialog>
@@ -262,8 +177,7 @@
 </template>
 
 <script>
-import { GetList, Delete, GetModel } from "@/api/user.js";
-import { GetAddressList } from "@/api/userAddress.js";
+import { GetPageList, Delete, Edit } from "@/api/foodCategory.js";
 import { messageShow } from "@/assets/js/Common.js";
 import moment from "moment";
 import "@/assets/js/Common.js";
@@ -271,9 +185,8 @@ export default {
   data() {
     return {
       loading: false,
-      boxLoading: false,
       outerVisible: false,
-      actionvalue: ["1", "2"],
+      actionvalue: ["1"],
       tableData: [],
       userAddressList: [],
       // 当前页
@@ -291,12 +204,10 @@ export default {
         },
       },
       form: {
-        username: "",
-        mobile: "",
-        truename: "",
-        gender: "",
-        email: "",
-        createtime: "",
+        name: "",
+        description: "",
+        viewOrder: "",
+        createTime: "",
       },
     };
   },
@@ -307,7 +218,7 @@ export default {
   methods: {
     loaddata() {
       this.loading = true;
-      GetList(this.param)
+      GetPageList(this.param)
         .then((res) => {
           if (res.success && res.result) {
             this.tableData = res.result.items;
@@ -322,36 +233,34 @@ export default {
     Search() {
       this.loaddata();
     },
-    async showDetails(id) {
+    async edit(row) {
       this.boxLoading = true;
-      await GetModel({ id: id })
-        .then((res) => {
-          if (res.success && res.result) {
-            this.form = res.result;
-          } else {
-            messageShow("warning", "用户不存在");
-          }
-        })
-        .catch((err) => {
-          this.boxLoading = false;
-        });
-      await GetAddressList({ id: id })
-        .then((res) => {
-          if (res.success && res.result) {
-            this.userAddressList = res.result;
-            console.log(this.userAddressList);
-          }
-        })
-        .catch((err) => {
-          this.boxLoading = false;
-        });
-
+      this.form = row;
       this.boxLoading = false;
       this.outerVisible = true;
     },
-    handleDelete(id) {
+    AddCate() {
+      this.outerVisible = true;
+    },
+    async save() {
       this.loading = true;
-      Delete({ id: id })
+      await Edit(this.form)
+        .then((res) => {
+          if (res.success) {
+            messageShow("success", "保存成功！");
+            this.loading = false;
+          }
+        })
+        .catch((err) => {
+          messageShow("error", "保存失败," + err.$message);
+          this.loading = false;
+        });
+      this.loaddata();
+      this.outerVisible = false;
+    },
+    async handleDelete(id) {
+      this.loading = true;
+      await Delete({ id: id })
         .then((res) => {
           if (res.success) {
             messageShow("success", "禁用成功！");
@@ -362,6 +271,7 @@ export default {
           messageShow("warning", "禁用失败！");
           this.loading = false;
         });
+      this.loaddata();
       this.loading = false;
     },
     handleCurrentChange(page) {

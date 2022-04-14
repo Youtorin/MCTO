@@ -1,5 +1,6 @@
 package com.yangdonglin.mcto.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yangdonglin.mcto.module.BaseEntity;
 import lombok.Data;
@@ -23,17 +24,20 @@ public class Foodcategory extends BaseEntity {
     /**
      * 商店ID
      */
+    @TableField("shopId")
     private String shopId;
 
     /**
      * 分类类型
      */
+    @TableField("name")
     private String name;
 
     /**
      * 描述
      */
-    private String desc;
+    @TableField("description")
+    private String description;
 
 
 }

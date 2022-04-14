@@ -1,52 +1,23 @@
-/** 订单列表 */
+/** 商品列表 */
 <template>
-  <el-container>
+  <el-container
+    style="height: 100%"
+    class="background-6F9 eig-mian-doc"
+    v-loading="loading"
+  >
     <el-aside width="200px" style="background-color: rgb(255, 255, 255)">
       <el-menu :default-openeds="['1', '2', '3']">
         <el-submenu index="1">
-          <template #title><i class="el-icon-message"></i>导航一</template>
+          <template #title><i class="el-icon-goods"></i>商品信息</template>
           <el-menu-item-group>
-            <template #title>分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
+            <el-menu-item
+              v-for="item in cateList"
+              :key="item.id"
+              v-model="item.id"
+              @click="handleChangeCate(item)"
+              ><span style="color: black">{{ item.name }}</span></el-menu-item
+            >
           </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template #title>选项4</template>
-            <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-submenu index="2">
-          <template #title><i class="el-icon-menu"></i>导航二</template>
-          <el-menu-item-group>
-            <template #title>分组一</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="2-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="2-4">
-            <template #title>选项4</template>
-            <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-submenu index="3">
-          <template #title><i class="el-icon-setting"></i>导航三</template>
-          <el-menu-item-group>
-            <template #title>分组一</template>
-            <el-menu-item index="3-1">选项1</el-menu-item>
-            <el-menu-item index="3-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="3-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="3-4">
-            <template #title>选项4</template>
-            <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-          </el-submenu>
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -196,10 +167,12 @@
 </template>
 
 <script>
+import { GetList } from "@/api/foodCategory.js";
 export default {
   data() {
     return {
       loading: false,
+      cateList: [],
       tableData: [
         {
           id: "1",
@@ -327,9 +300,23 @@ export default {
     param() {},
   },
   mounted() {
+    this.loadDate();
     this.total = this.tableData.length;
   },
   methods: {
+    async loadDate() {
+      this.loading = true;
+      await GetList()
+        .then((res) => {
+          if (res.success && res.result) {
+            this.cateList = res.result;
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+        });
+      this.loading = false;
+    },
     Search() {
       console.log(this.keyword);
     },
@@ -356,6 +343,9 @@ export default {
       }
       console.log(this.checkModel);
       console.log(this.checkValue);
+    },
+    handleChangeCate(val) {
+      console.log(val);
     },
   },
 };

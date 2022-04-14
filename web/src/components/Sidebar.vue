@@ -103,6 +103,16 @@ export default {
         icon: "el-icon-lx-cart",
         index: "/api/dashboard/commodity",
         title: "商品管理",
+        subs: [
+          {
+            index: "/api/dashboard/commodity",
+            title: "商品信息",
+          },
+          {
+            index: "/api/dashboard/foodCate",
+            title: "分类列表",
+          },
+        ],
       },
       {
         icon: "el-icon-lx-profile",

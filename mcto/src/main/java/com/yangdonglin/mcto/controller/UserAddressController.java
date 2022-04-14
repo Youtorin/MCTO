@@ -6,11 +6,13 @@ import com.yangdonglin.mcto.dto.IdDto;
 import com.yangdonglin.mcto.entity.UserAddress;
 import com.yangdonglin.mcto.module.AjaxResponse;
 import com.yangdonglin.mcto.module.BaseController;
+import com.yangdonglin.mcto.module.PageResult;
 import com.yangdonglin.mcto.service.UserAddressService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class UserAddressController extends BaseController {
             System.out.println(result);
             return AjaxResponse.success(result);
         }else {
-            return AjaxResponse.success();
+            return AjaxResponse.success(PageResult.create(new ArrayList<>(), 0));
         }
     }
 

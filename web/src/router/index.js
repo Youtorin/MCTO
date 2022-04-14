@@ -71,9 +71,17 @@ const routes = [
         path: "commodity",
         name: "commodity",
         meta: {
-          title: "商品管理",
+          title: "商品信息",
         },
         component: () => import("@/modules/commodity/commodity.vue"),
+      },
+      {
+        path: "foodCate",
+        name: "foodCate",
+        meta: {
+          title: "分类列表",
+        },
+        component: () => import("@/modules/commodity/foodCate.vue"),
       },
       {
         path: "customer",
