@@ -130,11 +130,6 @@ export default {
         title: "财务管理",
       },
       {
-        icon: "el-icon-lx-rank",
-        index: "/api/dashboard/analysis",
-        title: "经营分析",
-      },
-      {
         icon: "el-icon-lx-shop",
         index: "/api/dashboard/shop",
         title: "门店管理",

@@ -121,45 +121,23 @@
             >
               <el-main class="wnw-main">
                 <el-form :model="form" label-width="100px">
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="分类名" prop="name">
-                        <el-input
-                          type="text"
-                          v-model="form.name"
-                        ></el-input></el-form-item
-                    ></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="排序" prop="viewOrder">
-                        <el-input
-                          type="text"
-                          v-model="form.viewOrder"
-                        ></el-input></el-form-item
-                    ></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="创建时间" prop="createtime">
-                        <el-date-picker
-                          v-model="form.createTime"
-                          type="date"
-                          placeholder="请选择日期"
-                        >
-                        </el-date-picker> </el-form-item
-                    ></el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="22">
-                      <el-form-item label="描述" prop="description">
-                        <el-input
-                          type="text"
-                          v-model="form.description"
-                        ></el-input
-                      ></el-form-item>
-                    </el-col>
-                  </el-row>
+                  <el-form-item label="分类名" prop="name">
+                    <el-input type="text" v-model="form.name"></el-input
+                  ></el-form-item>
+                  <el-form-item label="排序" prop="viewOrder">
+                    <el-input type="text" v-model="form.viewOrder"></el-input
+                  ></el-form-item>
+                  <el-form-item label="创建时间" prop="createtime">
+                    <el-date-picker
+                      v-model="form.createTime"
+                      type="date"
+                      placeholder="请选择日期"
+                    >
+                    </el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="描述" prop="description">
+                    <el-input type="text" v-model="form.description"></el-input
+                  ></el-form-item>
                 </el-form>
               </el-main>
             </el-collapse-item>
@@ -240,6 +218,7 @@ export default {
       this.outerVisible = true;
     },
     AddCate() {
+      this.form = "";
       this.outerVisible = true;
     },
     async save() {

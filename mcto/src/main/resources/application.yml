@@ -14,6 +14,8 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: false
 
 
 #spring.datasource.druid.test-on-borrow=true

@@ -96,7 +96,7 @@ public class UserAddress extends BaseEntity {
     /**
      * 是否默认地址
      */
-    @TableField("is_Default")
+    @TableField("isDefault")
     private Integer isDefault;
 
 

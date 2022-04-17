@@ -273,13 +273,9 @@ export default {
       loading: false,
       boxLoading: false,
       outerVisible: false,
-      actionvalue: ["1", "2"],
+      actionvalue: ["1"],
       tableData: [],
       userAddressList: [],
-      // 当前页
-      pageIndex: this.defaultPageIndex,
-      // 页面大小
-      pageSize: this.defaultPageSize,
       total: 0,
       param: {
         keywords: "",

@@ -9,7 +9,7 @@ export const GetPageList = (param) => post("/api/foodcategory/getPageList", para
 /*
  * 获取分类列表
  */
-export const GetList = () => post("/api/foodcategory/getList");
+export const GetCateList = () => post("/api/foodcategory/getList");
 
 /*
  * 获取分类
@@ -23,6 +23,6 @@ export const Delete = (param) => post("/api/foodcategory/delete", param);
 
 
 /*
- * 修改商店基本信息
+ * 修改分类信息
  */
 export const Edit = (param) => post("/api/foodcategory/edit", param);

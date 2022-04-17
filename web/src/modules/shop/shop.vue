@@ -272,4 +272,7 @@ export default {
 .el-dialog__headerbtn {
   top: 5px;
 }
+.el-form-item {
+  margin-bottom: 20px;
+}
 </style>
