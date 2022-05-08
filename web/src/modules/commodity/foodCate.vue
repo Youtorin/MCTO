@@ -127,13 +127,11 @@
                   <el-form-item label="排序" prop="viewOrder">
                     <el-input type="text" v-model="form.viewOrder"></el-input
                   ></el-form-item>
-                  <el-form-item label="创建时间" prop="createtime">
+                  <el-form-item label="创建时间" prop="createTime">
                     <el-date-picker
                       v-model="form.createTime"
-                      type="date"
-                      placeholder="请选择日期"
-                    >
-                    </el-date-picker>
+                      placeholder="请选择时间"
+                    />
                   </el-form-item>
                   <el-form-item label="描述" prop="description">
                     <el-input type="text" v-model="form.description"></el-input
@@ -185,7 +183,7 @@ export default {
         name: "",
         description: "",
         viewOrder: "",
-        createTime: "",
+        createTime: null,
       },
     };
   },
@@ -218,7 +216,6 @@ export default {
       this.outerVisible = true;
     },
     AddCate() {
-      this.form = "";
       this.outerVisible = true;
     },
     async save() {

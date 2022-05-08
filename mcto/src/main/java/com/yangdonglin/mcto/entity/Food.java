@@ -58,6 +58,12 @@ public class Food extends BaseEntity {
     private String cover;
 
     /**
+     * 库存
+     */
+    @TableField("number")
+    private Integer number;
+
+    /**
      * 原价
      */
     @TableField("originPrice")
@@ -110,6 +116,5 @@ public class Food extends BaseEntity {
      */
     @TableField("praiseRate")
     private Float praiseRate;
-
 
 }

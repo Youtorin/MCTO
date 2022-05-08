@@ -17,12 +17,13 @@
   </noscript>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
-  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/layui/2.5.7/layui.all.min.js"
-    type="application/javascript"></script>
-  <!--注意：腾讯地图Javascript API GL需要在有Web服务的情况下才能正常使用-->
-  <script
-    src="https://map.qq.com/api/gljs?v=1.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=tools,geometry"></script>
-  <!-- built files will be auto injected -->
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: 'c6d216dc513164225218cbcd82f270ad',
+    }
+  </script>
+  <script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=1.4.15&key=c6d216dc513164225218cbcd82f270ad"></script>
 </body>
 
 </html>

@@ -174,54 +174,47 @@
       </el-container>
     </el-container>
 
-    <el-dialog v-model="outerVisible" title="分类信息" width="50%">
+    <el-dialog
+      append-to-body
+      v-model="outerVisible"
+      title="商品信息"
+      width="50%"
+    >
       <el-main style="height: 50%">
-        <template #default v-loading="boxLoading">
-          <el-collapse v-model="actionvalue" accordion>
-            <el-collapse-item
-              title="分类信息详情"
-              name="1"
-              class="wn-form-collapse"
+        <el-form :model="form" ref="modelInfo" label-width="100px">
+          <el-form-item label="分类" prop="cateId">
+            <el-select v-model="form.cateId">
+              <el-option
+                v-for="item in cateList"
+                :key="item"
+                :value="item.id"
+                :label="item.name"
+              >
+                {{ item.name }}
+              </el-option>
+            </el-select></el-form-item
+          >
+          <el-form-item label="图片url" prop="cover">
+            <el-input type="text" v-model="form.cover"></el-input
+          ></el-form-item>
+          <el-form-item label="食品名称" prop="title">
+            <el-input type="text" v-model="form.title"></el-input
+          ></el-form-item>
+          <el-form-item label="库存" prop="discount">
+            <el-input type="number" v-model="form.discount"></el-input
+          ></el-form-item>
+          <el-form-item label="创建时间" prop="createtime">
+            <el-date-picker
+              v-model="form.createTime"
+              type="date"
+              placeholder="请选择日期"
             >
-              <el-main class="wnw-main">
-                <el-form :model="form" label-width="100px">
-                  <el-form-item label="分类" prop="cateId">
-                    <el-select v-model="form.cateId">
-                      <el-option
-                        v-for="item in cateList"
-                        :key="item"
-                        :value="id"
-                        :label="item.name"
-                      >
-                        {{ item.name }}
-                      </el-option>
-                    </el-select></el-form-item
-                  >
-                  <el-form-item label="图片url" prop="cover">
-                    <el-input type="text" v-model="form.cover"></el-input
-                  ></el-form-item>
-                  <el-form-item label="食品名称" prop="title">
-                    <el-input type="text" v-model="form.title"></el-input
-                  ></el-form-item>
-                  <el-form-item label="库存" prop="discount">
-                    <el-input type="number" v-model="form.discount"></el-input
-                  ></el-form-item>
-                  <el-form-item label="创建时间" prop="createtime">
-                    <el-date-picker
-                      v-model="form.createTime"
-                      type="date"
-                      placeholder="请选择日期"
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                  <el-form-item label="描述" prop="description">
-                    <el-input type="text" v-model="form.description"></el-input
-                  ></el-form-item>
-                </el-form>
-              </el-main>
-            </el-collapse-item>
-          </el-collapse>
-        </template>
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="描述" prop="description">
+            <el-input type="text" v-model="form.description"></el-input
+          ></el-form-item>
+        </el-form>
       </el-main>
       <template #footer>
         <div class="dialog-footer">
@@ -233,7 +226,7 @@
   </div>
 </template>
 
-<script>
+<script >
 import { GetCateList } from "@/api/foodCategory.js";
 import { GetList, Edit } from "@/api/food.js";
 import { messageShow } from "@/assets/js/Common.js";
@@ -273,7 +266,6 @@ export default {
   },
   computed: {},
   mounted() {
-    console.log(11);
     this.loaddata();
   },
   methods: {
@@ -283,6 +275,7 @@ export default {
         .then((res) => {
           if (res.success && res.result) {
             this.cateList = res.result;
+            console.log(this.cateList);
             this.cateList.unshift({
               name: "全部分类",
               id: "",
@@ -315,22 +308,24 @@ export default {
     },
     async save() {
       this.loading = true;
+      console.log(this.form);
       await Edit(this.form)
         .then((res) => {
           if (res.success) {
             messageShow("success", "保存成功！");
             this.loading = false;
+          } else {
+            messageShow("error", "保存失败！");
           }
         })
         .catch((err) => {
-          messageShow("error", "保存失败," + err.$message);
+          messageShow("error", "保存失败！" + err.$message);
           this.loading = false;
         });
       this.loaddata();
       this.outerVisible = false;
     },
     Add() {
-      this.form = "";
       this.outerVisible = true;
     },
     handleCurrentChange(page) {
@@ -343,6 +338,7 @@ export default {
       this.loaddata();
     },
     CheckBoxChange(cheked, rowKey, value) {
+      debugger;
       if (cheked) {
         this.checkModel.push(value);
         this.checkValue.push(rowKey);

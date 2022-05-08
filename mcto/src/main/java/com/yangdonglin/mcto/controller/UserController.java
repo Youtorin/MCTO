@@ -1,5 +1,6 @@
 package com.yangdonglin.mcto.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yangdonglin.mcto.dto.IdDto;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
@@ -69,9 +71,16 @@ public class UserController {
                 return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_UPDATE);
             }
         } else {
+            LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(User::getUsername,param.getUsername());
+            User user = userServicel.getOne(wrapper);
+            if(ObjectUtils.isNotEmpty(user)){
+                return AjaxResponse.error("账号已存在");
+            }
             model = param;
             model.setStatus(1);
             model.setCreateTime(new Date());
+            model.setId(UUID.randomUUID().toString());
             boolean bool = userServicel.save(model);
             if (bool) {
                 return AjaxResponse.success();
@@ -88,5 +97,28 @@ public class UserController {
             return AjaxResponse.success(model);
         }
         return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);
+    }
+
+    @PostMapping("/getCurrShopInfo")
+    AjaxResponse getModel(@RequestBody User param) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername,param.getUsername())
+                .eq(User::getPassword,param.getPassword());
+        User model = userServicel.getOne(wrapper);
+        if (ObjectUtils.isNotEmpty(model)) {
+            return AjaxResponse.success(model);
+        }
+        return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);
+    }
+
+    @PostMapping("/editWallet")
+    AjaxResponse editWallet(@RequestBody User param){
+        User model = userServicel.getById(param.getId());
+        model.setWallet(model.getWallet().add(param.getWallet()));
+        boolean bool = userServicel.updateById(model);
+        if (bool) {
+            return AjaxResponse.success(model.getWallet());
+        }
+        return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_UPDATE);
     }
 }
