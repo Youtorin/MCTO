@@ -146,6 +146,7 @@
 <script>
 import { GetCateList } from "@/api/foodCategory.js";
 import { GetList } from "@/api/food.js";
+import { currentUser } from "@/assets/js/Common";
 export default {
   name: "Rank",
   data() {
@@ -177,7 +178,11 @@ export default {
           sord: "desc",
         },
       },
-      shopingList: [],
+      shopingList:
+        JSON.parse(localStorage.getItem(currentUser.username + "shopCart")) ===
+        null
+          ? []
+          : JSON.parse(localStorage.getItem(currentUser.username + "shopCart")),
     };
   },
   mounted() {
@@ -207,8 +212,10 @@ export default {
         this.form.count = 1;
         this.shopingList.push(this.form);
       }
-      // localStorage.setItem("shopCart", JSON.stringify(this.shopingList));
-      // console.log(JSON.parse(localStorage.getItem("shopCart")));
+      localStorage.setItem(
+        currentUser.username + "shopCart",
+        JSON.stringify(this.shopingList)
+      );
     },
     async loaddata() {
       this.loading = true;

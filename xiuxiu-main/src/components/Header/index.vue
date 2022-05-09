@@ -13,7 +13,17 @@
       >
         <el-menu-item index="/home">全部商品</el-menu-item>
         <el-menu-item index="/comments">店内评价</el-menu-item>
-        <el-menu-item index="/shopcart">购物车</el-menu-item>
+
+        <el-menu-item index="/shopcart"
+          ><el-badge
+            v-if="shopCart.length !== 0"
+            :value="shopCart.length"
+            class="item"
+            >购物车</el-badge
+          >
+          <span v-else>购物车</span></el-menu-item
+        >
+
         <el-menu-item index="/mypay">我的订单</el-menu-item>
 
         <el-menu-item index="/detail">我的资料</el-menu-item>
@@ -24,15 +34,28 @@
 </template>
 
 <script>
+import { currentUser } from "@/assets/js/Common";
 export default {
   name: "Header",
   data() {
     return {
       username: JSON.parse(localStorage.getItem("TOKEN")).username,
+      shopCart:
+        JSON.parse(localStorage.getItem(currentUser.username + "shopCart")) ===
+        null
+          ? []
+          : JSON.parse(localStorage.getItem(currentUser.username + "shopCart")),
     };
   },
-  computed: {},
-  created() {},
+  mounted() {
+    const that = this;
+    window.addEventListener("setItemEvent", function (e) {
+      if (e.key === currentUser.username + "shopCart") {
+        that.shopCart = JSON.parse(e.newValue);
+        console.log(that.shopCart);
+      }
+    });
+  },
   methods: {
     handleSelect(key) {
       this.activeIndex = key;
@@ -44,7 +67,7 @@ export default {
   },
 };
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .top {
   width: 1200px;
   height: 100px;
