@@ -338,7 +338,6 @@ export default {
       this.loaddata();
     },
     CheckBoxChange(cheked, rowKey, value) {
-      debugger;
       if (cheked) {
         this.checkModel.push(value);
         this.checkValue.push(rowKey);

@@ -9,6 +9,7 @@ import Register from '@/modules/Register'
 import Detail from '@/modules/Detail'
 import MyPay from '@/modules/MyPay'
 import ShopCart from '@/modules/ShopCart'
+import EditOrder from '@/modules/ShopCart/editOrder'
 import Comments from "@/modules/Comments"
 
 const router = new VueRouter({
@@ -43,6 +44,12 @@ const router = new VueRouter({
             name: 'shopcart',
             component: ShopCart,
             meta: { show: true, footshow: true }
+        },
+        {
+            path: '/editOrder',
+            name: 'editOrder',
+            component: EditOrder,
+            meta: { show: false, footshow: false }
         },
         {
             path: '/Login',

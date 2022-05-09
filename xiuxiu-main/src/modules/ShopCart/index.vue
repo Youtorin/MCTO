@@ -1,153 +1,264 @@
 <template>
   <div class="cart">
-    <h4>购物车</h4>
-    <div class="cart-main">
-      <div class="cart-th">
-        <div class="cart-th1">全部</div>
-        <div class="cart-th2">商品</div>
-        <div class="cart-th3">单价（元）</div>
-        <div class="cart-th4">数量</div>
-        <div class="cart-th5">金额（元）</div>
-        <div class="cart-th6">删除</div>
-      </div>
-      <div class="cart-body">
-        <ul class="cart-list" v-for="product in products" :key="product.id">
-          <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked='product.isChecked===1' @click="changeChecked(product)"/>
-          </li>
-          <li class="cart-list-con2">
-            <img src="./images/goods1.png" />
-            <div class="item-msg">{{product.name}}</div>
-          </li>
-          <li class="cart-list-con4">
-            <span class="price">{{ product.price }}</span>
-          </li>
-          <li class="cart-list-con5">
-            <el-input-number
-              v-model="product.num"
-             
-              :min="1"
-              :max="10"
-              label="描述文字"
-              size="mini"
-            ></el-input-number>
-          </li>
-          <li class="cart-list-con6">
-            <span class="sum">{{product.price*product.num }}</span>
-          </li>
-          <li class="cart-list-con7">
-            <a href="#none" class="sindelet" @click="deleteItem(product.id)">删除</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="cart-tool">
-      <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked='isAllChecked'   @change="updateAllChecked($event)"/>
-        <span>全选</span>
-      </div>
-      <div class="money-box">
-        <div class="chosed">已选择 <span>{{totalList}}</span>件商品</div>
-        <div class="sumprice">
-          <em>合计 ：</em>
-          <i class="summoney">{{totalPrice}}</i>
-        </div>
-        <div class="sumbtn">
-          <a class="sum-btn"  @click="pay">结算</a>
-        </div>
-      </div>
-    </div>
+    <el-container
+      style="height: 100%"
+      class="background-6F9 eig-mian-doc"
+      v-loading="loading"
+    >
+      <el-header>
+        <el-form :inline="true" class="user-search">
+          <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
+            <el-col :span="24" align="left">
+              <el-button type="danger" size="small" @click="deleteAll"
+                >全部删除</el-button
+              >
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-header>
+      <el-main class="wnw-main">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column width="40px" class="wn-table">
+            <template slot-scope="{ row }">
+              <el-checkbox
+                v-model="row.checked"
+                @change="(checked) => CheckBoxChange(checked, row[rowKey], row)"
+              ></el-checkbox>
+            </template>
+          </el-table-column>
+          <el-table-column
+            type="index"
+            label="序号"
+            header-align="center"
+            align="center"
+            class-name="wn-tableindex"
+            width="60px"
+          >
+          </el-table-column>
+          <el-table-column
+            label="商品"
+            prop="title"
+            align="center"
+            width="150px"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="图片"
+            prop="cover"
+            align="center"
+            width="200px"
+          >
+            <template slot-scope="scope">
+              <el-image
+                style="width: 100px; height: 100px"
+                :src="scope.row.cover"
+              ></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="单价/元"
+            prop="sellPrice"
+            align="center"
+          ></el-table-column>
+          <el-table-column label="数量" prop="count" align="center">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.count"
+                @change="
+                  (currentValue, oldValue) =>
+                    numChange(currentValue, oldValue, scope.row)
+                "
+                :min="1"
+              >
+              </el-input-number>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="金额/元"
+            prop="price"
+            align="center"
+            width="100px"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope">
+              {{ scope.row.sellPrice * scope.row.count }}
+            </template></el-table-column
+          >
+          <el-table-column align="center" width="150px">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="danger"
+                round
+                @click="handleDelete(scope.row)"
+                >删除</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-main>
+
+      <el-footer :inline="true" class="wn-footer">
+        <el-row style="padding-top: 1px">
+          <el-col :span="2"
+            ><el-checkbox
+              class="wnw-ml-50"
+              style="padding: 7px 0"
+              v-model="isCheckAll"
+              :indeterminate="isCheckAllIndeterminate"
+              @change="CheckAll"
+              >全选</el-checkbox
+            ></el-col
+          >
+          <el-col :span="16" class="align-left wnw-ml-50">
+            <span style="font-size: 25px">合计：¥ {{ totalPrice }}</span>
+          </el-col>
+          <el-col :span="4" class="align-right wnw-mr-20">
+            <el-button type="danger" round @click="settlement"
+              >结算({{ checkModel.length }})</el-button
+            >
+          </el-col>
+        </el-row>
+      </el-footer>
+    </el-container>
   </div>
 </template>
 
 <script>
+import { currentUser } from "@/assets/js/Common";
 export default {
   name: "ShopCart",
   data() {
     return {
-      products: [
-        {
-          isChecked:1,
-          name:'乌龙茶',
-          id:'1',
-          price: 399,
-          num: 1,
-        },
-        {isChecked:1,
-           name:'乌龙茶',
-          id:'5',
-          price: 399,
-          num: 1,
-        },
-      ],
+      loading: false,
+      isCheckAll: false,
+      isCheckAllIndeterminate: false,
+      rowKey: "id",
+      checkModel: [],
+      checkValue: [],
+      tableData: [],
     };
-
-    // totalPrice:num*price
   },
   mounted() {
     //  挂载
-    // this.getData();
+    this.getDate();
   },
-  methods: {
-    changeChecked(product){
-         product.isChecked = product.isChecked===1?0:1
+  watch: {
+    isCheckAll(v) {
+      this.tableData.forEach((x) => {
+        x.checked = v;
+      });
     },
-    
-    updateAllChecked(e){
-      let checked = e.target.checked?1:0
-      this.products.forEach(item=>{
-        item.isChecked = checked
-      })
+    tableData: {
+      handler(v) {
+        this.isCheckAllIndeterminate =
+          this.checkedCount > 0 && v.length > this.checkedCount;
+      },
+      deep: true,
     },
-    // 删除商品
-    deleteItem(id){
-     
-     this.products = this.products.filter(item=>{
-       
-       return id !== item.id
-      })
-     
-      
-    },
-    // 结算成功
-    pay(){
-      let count = 0
-      this.products.forEach(item=>{
-        if(item.isChecked===1) count++
-      })
-      if(count!==0) return console.log('支付成功');
-      console.log('支付失败');
-    }
-
   },
   computed: {
-  //  是否全选
-  isAllChecked() {
-      return this.products.every((item) => item.isChecked === 1);
+    checkedCount() {
+      return this.tableData.filter((x) => x.checked).length;
     },
-    // 选中商品数量
-    totalList(){
-       let sum = 0;
-      sum = this.products
-        .filter((item) => item.isChecked === 1)
-        .reduce((total, item) => {
-          return total + item.num;
-        }, 0);
-
-      return sum;
-     
+    totalPrice() {
+      var p = 0;
+      for (var i = 0; i < this.checkModel.length; i++) {
+        p += this.checkModel[i].sellPrice * this.checkModel[i].count;
+      }
+      return p;
     },
-    // 选中商品的价格
-    totalPrice(){
-      let sum = 0;
-      sum = this.products
-        .filter((item) => item.isChecked === 1)
-        .reduce((total, item) => {
-          return total + item.price * item.num;
-        }, 0);
-
-      return sum;
-    }
+  },
+  methods: {
+    getDate() {
+      if (localStorage.getItem(currentUser.username + "shopCart")) {
+        this.tableData = JSON.parse(
+          localStorage.getItem(currentUser.username + "shopCart")
+        );
+      }
+      for (var i = 0; i < this.tableData.length; i++) {
+        this.tableData[i] = Object.assign(this.tableData[i], {
+          price: this.tableData[i].sellPrice * this.tableData[i].count,
+        });
+      }
+    },
+    settlement() {
+      this.$router.push("/editOrder");
+    },
+    // eslint-disable-next-line vue/return-in-computed-property
+    numChange(curr, old, row) {
+      for (var i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].id == row.id) {
+          // 数量加1
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.tableData[i].count = curr;
+          break;
+        }
+      }
+      localStorage.setItem(
+        currentUser.username + "shopCart",
+        JSON.stringify(this.tableData)
+      );
+    },
+    handleDelete(row) {
+      for (var i = 0; i < this.tableData.length; i++) {
+        if (this.tableData[i].id == row.id) {
+          this.tableData.splice(row, 1);
+          break;
+        }
+      }
+      localStorage.setItem(
+        currentUser.username + "shopCart",
+        JSON.stringify(this.tableData)
+      );
+    },
+    deleteAll() {
+      this.$confirm("是否确定全部删除？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.tableData = [];
+        localStorage.removeItem(currentUser.username + "shopCart");
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+        });
+      });
+    },
+    CheckBoxChange(cheked, rowKey, value) {
+      if (cheked) {
+        this.checkModel.push(value);
+        this.checkValue.push(rowKey);
+      } else {
+        let entity = this.checkModel.findIndex((item) => {
+          if (item.id == rowKey) {
+            return true;
+          }
+        });
+        this.checkModel.splice(entity, 1);
+        this.checkValue.splice(rowKey, 1);
+      }
+    },
+    //全选事件
+    CheckAll(bo) {
+      if (bo) {
+        if (this.tableData && this.tableData.length > 0) {
+          var check = [];
+          var newobj = [];
+          for (let i = 0; i < this.tableData.length; i++) {
+            newobj.push(this.tableData[i]);
+            check.push(this.tableData[i][this.rowKey]);
+          }
+          this.checkModel = newobj;
+          this.checkValue = check;
+        }
+      } else {
+        this.checkValue = [];
+        this.checkModel = [];
+      }
+    },
   },
 };
 </script>
@@ -155,6 +266,7 @@ export default {
 <style lang="less" scoped>
 .cart {
   width: 1200px;
+  height: 850px;
   margin: 0 auto;
 
   h4 {
@@ -354,7 +466,7 @@ export default {
           text-align: center;
           font-size: 18px;
           font-family: "Microsoft YaHei";
-          background: rgb(103,194,58);
+          background: rgb(103, 194, 58);
           overflow: hidden;
         }
       }

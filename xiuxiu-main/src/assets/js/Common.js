@@ -174,8 +174,8 @@ function dispatchEventStroage() {
 }
 
 export const currentUser = {
-  id: JSON.parse(localStorage.getItem("TOKEN")).id,
-  username: JSON.parse(localStorage.getItem("TOKEN")).username,
+  id: JSON.parse(localStorage.getItem("TOKEN")) === null ? '' : JSON.parse(localStorage.getItem("TOKEN")).id,
+  username: JSON.parse(localStorage.getItem("TOKEN")) === null ? '' : JSON.parse(localStorage.getItem("TOKEN")).username,
 };
 
 export default dispatchEventStroage;
