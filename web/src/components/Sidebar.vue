@@ -68,18 +68,8 @@ export default {
       },
       {
         icon: "el-icon-lx-sort",
-        index: "comment",
-        title: "评价管理",
-        subs: [
-          {
-            index: "/api/dashboard/shopComment",
-            title: "门店评价",
-          },
-          {
-            index: "/api/dashboard/comment",
-            title: "项目评价",
-          },
-        ],
+        index: "/api/dashboard/shopComment",
+        title: "门店评价",
       },
       {
         icon: "el-icon-lx-cart",

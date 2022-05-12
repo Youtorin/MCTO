@@ -1,6 +1,8 @@
 package com.yangdonglin.mcto.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.yangdonglin.mcto.module.BaseEntity;
 import lombok.Data;
@@ -92,9 +94,34 @@ public class Order extends BaseEntity {
     private Integer distributionType;
 
     /**
-     * 实付金额
+     * 退回款项
      */
     private BigDecimal payMoney;
+
+    /**
+     * 退款原因
+     */
+    private String refundReason;
+
+    /**
+     * 申请时间
+     */
+    private Date applyTime;
+
+    /**
+     * 卖家处理时间
+     */
+    private Date handleTime;
+
+    /**
+     * 退款完成时间
+     */
+    private Date finishTime;
+
+    /**
+     * 退款状态 1-退款中 2-已完成 3-已取消
+     */
+    private Integer refundStatus;
 
     /**
      * 限定时间

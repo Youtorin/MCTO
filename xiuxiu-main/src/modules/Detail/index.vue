@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail" v-loading="bodyLoading">
     <el-row>
       <el-col>
         <div class="logo">
@@ -206,7 +206,7 @@
 </template>
 
 <script>
-import { Edit, EditWallet } from "@/api/user";
+import { Edit, EditWallet, GetModel } from "@/api/user";
 import { messageShow } from "@/assets/js/Common.js";
 import { setToken } from "@/utils/token";
 export default {
@@ -226,6 +226,7 @@ export default {
       userPassVisible: false,
       userWalletVisible: false,
       loading: false,
+      bodyLoading: false,
       user: {
         username: "",
         password: "",
@@ -283,9 +284,20 @@ export default {
     };
   },
   mounted() {
-    this.user = JSON.parse(localStorage.getItem("TOKEN"));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      this.bodyLoading = true;
+      var id = JSON.parse(localStorage.getItem("TOKEN")).id;
+      GetModel({ id: id }).then((res) => {
+        if (res.success) {
+          this.user = res.result;
+          setToken(JSON.stringify(this.user));
+          this.bodyLoading = false;
+        }
+      });
+    },
     edit(row, operator) {
       this.form = row;
       console.log(this.form);

@@ -22,6 +22,11 @@ public class PageQueryParams {
      */
     private Integer status;
 
+    /**
+     * 用户id
+     */
+    private String userId;
+
 
     /**
      * 分页对象,常用的分页参数集合

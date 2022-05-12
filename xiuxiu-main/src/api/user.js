@@ -4,8 +4,13 @@ import { post } from "@/plugins/ajax";
 /*
  * 获取用户登录信息
  */
-export const Login = (param) => post("/api/user/getCurrShopInfo", param);
+export const Login = (param) => post("/api/user/getCurrUserInfo", param);
 
+
+/*
+ * 获取用户信息
+ */
+export const GetModel = (param) => post("/api/user/getModel", param);
 
 /*
  * 用户注册

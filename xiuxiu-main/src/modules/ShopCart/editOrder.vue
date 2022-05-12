@@ -185,13 +185,11 @@
         <span class="addAddressCons">支付方式</span>
         <el-form style="margin: 10px 20px">
           <el-form-item>
-            <el-row>
-              <el-radio-group v-model="paymentType" @change="paymentTypeChange">
-                <el-radio border :label="'' + 0">微信</el-radio>
-                <el-radio border :label="'' + 1">支付宝</el-radio>
-                <el-radio border :label="'' + 2">余额</el-radio>
-              </el-radio-group>
-            </el-row>
+            <el-radio-group v-model="paymentType" @change="paymentTypeChange">
+              <el-radio border :label="'' + 0">微信</el-radio>
+              <el-radio border :label="'' + 1">支付宝</el-radio>
+              <el-radio border :label="'' + 2">余额</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item>
             <el-row>
@@ -278,7 +276,19 @@
         </el-main>
       </div>
       <div v-else-if="!showPay">
-        <el-result icon="success" title="支付成功" :subTitle="backSubTitle">
+        <el-result
+          v-if="paySuccess"
+          icon="success"
+          title="支付成功"
+          :subTitle="backSubTitle"
+        >
+          <template slot="extra">
+            <el-button type="primary" size="medium" @click="backHome()"
+              >立即返回</el-button
+            >
+          </template>
+        </el-result>
+        <el-result v-else icon="error" title="支付失败" subTitle="余额不足">
           <template slot="extra">
             <el-button type="primary" size="medium" @click="backHome()"
               >立即返回</el-button
@@ -303,7 +313,7 @@ import {
   SetDefault,
   DeleteAddress,
 } from "@/api/userAddress.js";
-import { AddOrder } from "@/api/order.js";
+import { AddOrder, SetOrderStatus } from "@/api/order.js";
 export default {
   data() {
     return {
@@ -317,11 +327,13 @@ export default {
       tableData: [],
       address: [],
       backSubTitle: "",
+      orderId: "",
       isTranShow: true,
       isDefault: false,
       newAddressShow: false,
       payVisible: false,
       showPay: true,
+      paySuccess: false,
       limitNum: 1, //默认显示几个地址
       paymentType: "0",
       distribution: "0",
@@ -482,9 +494,15 @@ export default {
       this.distribution = val;
     },
     creatOrder() {
+      if (this.AddressData.length === 0) {
+        messageShow("warning", "请选择一个收货地址！");
+        return;
+      }
       var param = {
         userId: this.userId,
         userAddressId: this.AddressData[0].id,
+        username: this.AddressData[0].username,
+        userMobile: this.AddressData[0].mobile,
         remark: this.remark,
         food: JSON.stringify(this.tableData),
         totalMoney: this.totalPrice,
@@ -496,6 +514,7 @@ export default {
         .then((res) => {
           if (res.success) {
             messageShow("success", "创建订单成功！");
+            this.orderId = res.result;
             var temp = JSON.parse(
               localStorage.getItem(this.username + "shopCart")
             );
@@ -530,8 +549,7 @@ export default {
     backHome() {
       this.$router.push("/home");
     },
-    pay() {
-      this.payLoading = true;
+    messageTime() {
       setTimeout(() => {
         this.showPay = false;
         this.payLoading = false;
@@ -546,6 +564,25 @@ export default {
           }, 1000);
         }, 1000);
       }, 2000);
+    },
+    pay() {
+      this.payLoading = true;
+      SetOrderStatus({
+        id: this.orderId,
+        status: 2,
+        price: this.totalPrice,
+        payType: this.paymentType,
+      })
+        .then((res) => {
+          if (res.success) {
+            this.paySuccess = true;
+            this.messageTime();
+          }
+        })
+        .catch(() => {
+          this.paySuccess = false;
+          this.messageTime();
+        });
     },
   },
   filters: {

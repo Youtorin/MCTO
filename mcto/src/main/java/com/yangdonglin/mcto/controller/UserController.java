@@ -105,7 +105,7 @@ public class UserController {
         return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);
     }
 
-    @PostMapping("/getCurrShopInfo")
+    @PostMapping("/getCurrUserInfo")
     AjaxResponse getModel(@RequestBody User param) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUsername,param.getUsername())

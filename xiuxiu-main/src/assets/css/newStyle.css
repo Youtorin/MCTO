@@ -930,6 +930,35 @@ textarea:-ms-input-placeholder {
   zoom: 1.2;
 }
 
+
+.wn-select-option {
+  width: 170px !important;
+  margin-right: 10px;
+}
+
+.wn-select-option .el-input__inner,
+.wn-select-option .el-input-group__prepend {
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  border-bottom: solid 1px #cccccc;
+  padding: 0 5px;
+}
+
+.wn-select-option .el-input-group__append {
+  border: none;
+  border-bottom: solid 1px #cccccc;
+  background-color: #fff;
+  border-radius: 0;
+  padding: 0 10px;
+}
+
+.wn-select-option .el-input-group__append .el-icon-search {
+  color: #004a86;
+  font-weight: bold;
+  zoom: 1.2;
+}
+
 .wn-float-r {
   float: right;
 }
