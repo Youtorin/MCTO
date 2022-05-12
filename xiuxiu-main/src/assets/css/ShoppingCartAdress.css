@@ -147,12 +147,12 @@
 /*收货地址及返回购物车*/
 .addAddressCons {
 	font-weight: bold;
+	margin-left: 20px;
 }
 
 .addAddress {
 	float: right;
-	color: #05226C;
-	cursor: pointer;
+	margin-right: 20px;
 }
 
 .addAddress a {
@@ -336,14 +336,18 @@
 }
 
 .addressDefultClass {
-	border: 1px solid #EDEDED;
-	padding: 3px 7px;
-	border-radius: 4px;
-	color: #EDEDED;
+	border: 1px solid #000000;
+	padding: 3px 6px;
+	border-radius: 6px;
+	margin-left: 10px;
+	color: #ff4949;
 }
 
 .edmitAddre {
 	float: right;
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 20px;
 }
 
 /*金额抵用函数*/
@@ -410,9 +414,9 @@
 .consigneeList {
 	border: 1px solid #999999;
 	margin-right: 20px;
-	padding: 5px 17px;
+	padding-top: 7px;
 	display: inline-block;
-	margin-top: 10px;
+	margin-top: 5px;
 	cursor: pointer;
 	position: relative;
 	height: 31px;

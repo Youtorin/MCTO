@@ -9,7 +9,11 @@
         <el-form :inline="true" class="user-search">
           <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
             <el-col :span="24" align="left">
-              <el-button type="danger" size="small" @click="deleteAll"
+              <el-button
+                :disabled="tableData.length === 0"
+                type="danger"
+                size="small"
+                @click="deleteAll"
                 >全部删除</el-button
               >
             </el-col>
@@ -103,6 +107,7 @@
         <el-row style="padding-top: 1px">
           <el-col :span="2"
             ><el-checkbox
+              v-if="false"
               class="wnw-ml-50"
               style="padding: 7px 0"
               v-model="isCheckAll"
@@ -115,7 +120,11 @@
             <span style="font-size: 25px">合计：¥ {{ totalPrice }}</span>
           </el-col>
           <el-col :span="4" class="align-right wnw-mr-20">
-            <el-button type="danger" round @click="settlement"
+            <el-button
+              :disabled="checkModel.length === 0"
+              type="danger"
+              round
+              @click="settlement"
               >结算({{ checkModel.length }})</el-button
             >
           </el-col>
@@ -182,8 +191,13 @@ export default {
           price: this.tableData[i].sellPrice * this.tableData[i].count,
         });
       }
+      this.isCheckAll = false;
     },
     settlement() {
+      localStorage.setItem(
+        currentUser.username + "shopCartOrder",
+        JSON.stringify(this.checkModel)
+      );
       this.$router.push("/editOrder");
     },
     // eslint-disable-next-line vue/return-in-computed-property
@@ -220,7 +234,10 @@ export default {
         type: "warning",
       }).then(() => {
         this.tableData = [];
-        localStorage.removeItem(currentUser.username + "shopCart");
+        localStorage.setItem(
+          currentUser.username + "shopCart",
+          JSON.stringify(this.tableData)
+        );
         this.$message({
           type: "success",
           message: "删除成功!",
@@ -240,6 +257,7 @@ export default {
         this.checkModel.splice(entity, 1);
         this.checkValue.splice(rowKey, 1);
       }
+      this.$emit("CheckBoxChange", cheked, rowKey, value);
     },
     //全选事件
     CheckAll(bo) {

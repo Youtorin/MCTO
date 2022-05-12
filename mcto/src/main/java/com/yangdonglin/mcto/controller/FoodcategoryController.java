@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -104,6 +105,7 @@ public class FoodcategoryController extends BaseController {
             model = param;
             model.setStatus(1);
             model.setCreateTime(new Date());
+            model.setId(UUID.randomUUID().toString());
             boolean bool = cateService.save(model);
             if (bool) {
                 return AjaxResponse.success();

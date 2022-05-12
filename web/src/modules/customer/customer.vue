@@ -215,7 +215,7 @@
               class="wn-form-collapse"
             >
               <el-main class="wnw-main">
-                <el-table v-model="userAddressList" style="width: 100%">
+                <el-table :data="userAddressList" style="width: 100%">
                   <el-table-column
                     type="index"
                     label="序号"
@@ -335,13 +335,13 @@ export default {
         .then((res) => {
           if (res.success && res.result) {
             this.userAddressList = res.result;
-            console.log(this.userAddressList);
           }
         })
         .catch((err) => {
           this.boxLoading = false;
         });
 
+      console.log(this.userAddressList);
       this.boxLoading = false;
       this.outerVisible = true;
     },

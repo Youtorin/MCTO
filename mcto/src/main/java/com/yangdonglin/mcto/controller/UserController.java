@@ -40,8 +40,14 @@ public class UserController {
         }
         wrapper.orderByDesc("createtime");
         Page<User> page = new Page<>();
-        page = userServicel.page(new Page<>(params.getPagination().getPage(), params.getPagination().getPageSize()), wrapper);
-        PageResult<User> result = PageResult.create(BeanCopyHelper.copyListProperties(page.getRecords(), User::new), page.getTotal());
+        page = userServicel.page(
+                new Page<>(
+                        params.getPagination().getPage(),
+                        params.getPagination().getPageSize()),
+                wrapper);
+        PageResult<User> result = PageResult.create(
+                BeanCopyHelper.copyListProperties(page.getRecords(), User::new),
+                page.getTotal());
         if (ObjectUtils.isNotEmpty(result)) {
             return AjaxResponse.success(result);
         }

@@ -28,38 +28,6 @@ const routes = [
         component: () => import("@/modules/order/orderlist.vue"),
       },
       {
-        path: "order",
-        name: "order",
-        meta: {
-          title: "待办订单管理",
-        },
-        component: () => import("@/modules/order/order.vue"),
-      },
-      {
-        path: "retrievalorder",
-        name: "retrievalorder",
-        meta: {
-          title: "出库订单管理",
-        },
-        component: () => import("@/modules/order/retrievalorder.vue"),
-      },
-      {
-        path: "refundorder",
-        name: "refundorder",
-        meta: {
-          title: "退款订单管理",
-        },
-        component: () => import("@/modules/order/refundorder.vue"),
-      },
-      {
-        path: "comment",
-        name: "comment",
-        meta: {
-          title: "项目评价管理",
-        },
-        component: () => import("@/modules/comment/comment.vue"),
-      },
-      {
         path: "shopComment",
         name: "shopComment",
         meta: {

@@ -39,24 +39,32 @@ export default {
   name: "Header",
   data() {
     return {
-      username: JSON.parse(localStorage.getItem("TOKEN")).username,
-      shopCart:
+      username: "",
+      shopCart: [],
+    };
+  },
+  beforeCreate() {
+    this.$nextTick(() => {
+      this.username =
+        JSON.parse(localStorage.getItem("TOKEN")) === null
+          ? ""
+          : JSON.parse(localStorage.getItem("TOKEN")).username;
+      this.shopCart =
         JSON.parse(localStorage.getItem(currentUser.username + "shopCart")) ===
         null
           ? []
-          : JSON.parse(localStorage.getItem(currentUser.username + "shopCart")),
-    };
-  },
-  mounted() {
-    const that = this;
-    window.addEventListener("setItemEvent", function (e) {
-      if (e.key === currentUser.username + "shopCart") {
-        that.shopCart = JSON.parse(e.newValue);
-        console.log(that.shopCart);
-      }
+          : JSON.parse(localStorage.getItem(currentUser.username + "shopCart"));
+      const that = this;
+      window.addEventListener("setItemEvent", function (e) {
+        if (e.key === currentUser.username + "shopCart") {
+          that.shopCart = JSON.parse(e.newValue);
+          console.log(that.shopCart);
+        }
+      });
     });
   },
   methods: {
+    loadData() {},
     handleSelect(key) {
       this.activeIndex = key;
     },

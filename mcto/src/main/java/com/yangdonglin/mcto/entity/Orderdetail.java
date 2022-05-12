@@ -28,7 +28,7 @@ public class Orderdetail extends BaseEntity {
     /**
      * 用户名
      */
-    private String userUsername;
+    private String username;
 
     /**
      * 用户联系电话
@@ -38,7 +38,7 @@ public class Orderdetail extends BaseEntity {
     /**
      * 用户地址ID
      */
-    private String UserAddressId;
+    private String userAddressId;
 
     /**
      * 经度
@@ -53,7 +53,7 @@ public class Orderdetail extends BaseEntity {
     /**
      * 用户详细地址
      */
-    private String UserAddress;
+    private String userAddress;
 
     /**
      * 商铺名字

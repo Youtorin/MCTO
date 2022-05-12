@@ -7,6 +7,9 @@ import tool from "@/assets/js/Common";
 import "./assets/css/icon.css";
 import "./assets/css/common.css";
 import "./assets/css/newStyle.css";
+import "./assets/css/ShoppingCartAdress.css";
+import "./assets/css/font-awesome.css";
+import "./assets/css/font-awesome.min.css";
 
 import "swiper/css/swiper.css";
 Vue.config.productionTip = false;

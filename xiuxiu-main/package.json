@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.24.0",
     "core-js": "^3.22.3",
+    "element-china-area-data": "^5.0.2",
     "element-ui": "^2.15.8",
     "less": "^4.1.2",
     "less-loader": "^5.0.0",

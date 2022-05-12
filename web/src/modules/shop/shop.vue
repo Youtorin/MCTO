@@ -131,7 +131,8 @@ export default {
       dialogVisible: false,
       address: [],
       form: {
-        id: localStorage.getItem("currentUserId"),
+        id: "",
+        shopId: localStorage.getItem("currentUserId"),
         shopname: "",
         storeImg: "",
         instoreImg: [],
@@ -159,7 +160,7 @@ export default {
   methods: {
     async loaddata() {
       this.loading = true;
-      await GetInfo({ id: this.form.id })
+      await GetInfo({ id: this.form.shopId })
         .then((res) => {
           if (res.success && res.result !== null) {
             this.form = res.result;
@@ -175,7 +176,6 @@ export default {
             this.address.push(res.result.city);
             this.address.push(res.result.district);
             this.loading = false;
-            console.log(this.address);
           }
         })
         .catch((err) => {
@@ -198,7 +198,6 @@ export default {
               messageShow("error", "保存失败," + err.$message);
               this.loading = false;
             });
-          console.log(this.form);
         } else {
           messageShow("error", "还有未填字段");
           return false;
@@ -212,7 +211,6 @@ export default {
       this.form.province = value[0];
       this.form.city = value[1];
       this.form.district = value[2];
-      console.log(this.address);
     },
     UploadChange(file, fileList) {
       const isJPG = file.raw.type === "image/jpeg";

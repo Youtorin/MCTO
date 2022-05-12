@@ -17,6 +17,11 @@ public class PageQueryParams {
     @JsonProperty("keywords")
     private String keywords;
 
+    /**
+     * 默认状态属性
+     */
+    private Integer status;
+
 
     /**
      * 分页对象,常用的分页参数集合

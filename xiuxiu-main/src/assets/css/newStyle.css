@@ -2968,8 +2968,9 @@ top: 1px;
   color: #f00;
 }
 
-.wn-edit-form .el-radio.is-bordered {
-  padding: 7px 20px 0 10px;
+.el-radio.is-bordered {
+  padding: 12px 20px 0 10px;
+  box-sizing: content-box;
 }
 
 .wnw-view-bottom-btns {

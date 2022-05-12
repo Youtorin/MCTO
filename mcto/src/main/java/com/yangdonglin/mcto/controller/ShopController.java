@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * <p>
@@ -70,6 +72,9 @@ public class ShopController extends BaseController {
             return AjaxResponse.success();
         }else{
             model = dto;
+            model.setId(UUID.randomUUID().toString());
+            model.setStatus(1);
+            model.setCreateTime(new Date());
             shopService.save(model);
             return AjaxResponse.success();
         }
