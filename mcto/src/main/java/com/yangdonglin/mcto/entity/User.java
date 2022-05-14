@@ -37,9 +37,19 @@ public class User extends BaseEntity {
     private String mobile;
 
     /**
+     * 用户头像
+     */
+    private String img;
+
+    /**
      * 钱包
      */
     private BigDecimal wallet;
+
+    /**
+     * 访问次数
+     */
+    private Integer viewNum;
 
     /**
      * 邮箱

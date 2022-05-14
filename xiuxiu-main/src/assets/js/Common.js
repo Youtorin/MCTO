@@ -60,11 +60,12 @@ export const getfilters = (searchId) => {
 
 /** **弹出提示****/
 
-export const messageShow = (type, title) => {
+export const messageShow = (type, title, time) => {
+  time = 2000
   Message({
     type: type,
     message: title,
-    duration: 2000,
+    duration: time,
   });
 };
 

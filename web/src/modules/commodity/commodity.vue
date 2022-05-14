@@ -39,7 +39,9 @@
           <el-form :inline="true" :model="param" class="user-search">
             <el-row class="wn-row wn-row-fir" style="margin-bottom: 5px">
               <el-col :span="24" align="right">
-                <el-button type="danger" size="small">批量删除</el-button>
+                <el-button type="danger" size="small" @click="handleDelete"
+                  >批量删除</el-button
+                >
                 <el-button type="primary" size="small" @click="Add"
                   >添加商品</el-button
                 >
@@ -108,13 +110,18 @@
               align="center"
             ></el-table-column>
             <el-table-column
+              label="售价"
+              prop="sellPrice"
+              align="center"
+            ></el-table-column>
+            <el-table-column
               label="描述"
               prop="description"
               align="center"
             ></el-table-column>
             <el-table-column
               label="库存"
-              prop="discount"
+              prop="number"
               align="center"
               width="100px"
               show-overflow-tooltip
@@ -149,7 +156,7 @@
                   size="mini"
                   type="danger"
                   round
-                  @click="handleDelete(scope.row)"
+                  @click="handleDelete(scope.row, true)"
                   >下架</el-button
                 >
               </template>
@@ -195,13 +202,33 @@
             </el-select></el-form-item
           >
           <el-form-item label="图片url" prop="cover">
-            <el-input type="text" v-model="form.cover"></el-input
-          ></el-form-item>
+            <el-upload
+              ref="upload"
+              style="display: inline-block"
+              action=""
+              multiple
+              :limit="1"
+              :http-request="httpRequest"
+              :on-remove="handleRemove"
+              :before-upload="beforeAvatarUpload"
+            >
+              <el-image
+                v-if="form.cover"
+                :src="form.cover"
+                fit="fill"
+                class="avatar"
+              />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="食品名称" prop="title">
             <el-input type="text" v-model="form.title"></el-input
           ></el-form-item>
-          <el-form-item label="库存" prop="discount">
-            <el-input type="number" v-model="form.discount"></el-input
+          <el-form-item label="售价" prop="sellPrice">
+            <el-input type="number" v-model="form.sellPrice"></el-input
+          ></el-form-item>
+          <el-form-item label="库存" prop="number">
+            <el-input type="number" v-model="form.number"></el-input
           ></el-form-item>
           <el-form-item label="创建时间" prop="createtime">
             <el-date-picker
@@ -228,7 +255,7 @@
 
 <script >
 import { GetCateList } from "@/api/foodCategory.js";
-import { GetList, Edit } from "@/api/food.js";
+import { GetList, Edit, Delete } from "@/api/food.js";
 import { messageShow } from "@/assets/js/Common.js";
 import moment from "moment";
 export default {
@@ -248,7 +275,8 @@ export default {
         cateId: "",
         cover: "",
         title: "",
-        discount: 0,
+        number: 0,
+        sellPrice: 0,
         createTime: "",
         description: "",
       },
@@ -261,6 +289,9 @@ export default {
           sidx: "CreateTime",
           sord: "desc",
         },
+      },
+      nextProjectForm: {
+        publicWelfareUrl: "",
       },
     };
   },
@@ -303,8 +334,35 @@ export default {
       this.boxLoading = false;
       this.outerVisible = true;
     },
-    handleDelete(row) {
-      console.log(row);
+    handleDelete(row, flag) {
+      this.$confirm("是否确认下架？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.loading = true;
+        var ids = [];
+        if (flag) {
+          ids.push(row.id);
+        } else {
+          ids = this.checkValue;
+          if (ids.length === 0) {
+            messageShow("warning", "未选择商品");
+            return;
+          }
+        }
+        Delete(ids)
+          .then(() => {
+            if (res.success) {
+              messageShow("success", "下架成功！");
+              this.loaddata();
+              this.loading = false;
+            }
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      });
     },
     async save() {
       this.loading = true;
@@ -313,7 +371,16 @@ export default {
         .then((res) => {
           if (res.success) {
             messageShow("success", "保存成功！");
-            this.loading = false;
+            (this.form = {
+              cateId: "",
+              cover: "",
+              sellPrice: 0,
+              title: "",
+              number: 0,
+              createTime: "",
+              description: "",
+            }),
+              (this.loading = false);
           } else {
             messageShow("error", "保存失败！");
           }
@@ -361,6 +428,40 @@ export default {
       }
       var f = "YYYY-MM-DD";
       return moment(date).format(f);
+    },
+    httpRequest({ file }) {
+      //阿里云OSS上传
+      const fileName = `${Date.parse(new Date())}/${file.name}`; //定义唯一的文件名
+      // console.log(fileName)
+      let OSS = require("ali-oss");
+      var client = new OSS({
+        region: "oss-cn-hangzhou", //节点
+        accessKeyId: "LTAI5t8AEpDswvW4QVp6iyjq",
+        accessKeySecret: "0vtOgQcKwzVibXPhITvwRaJGuCTgxp",
+        bucket: "yangdonglin",
+      });
+
+      client
+        .put(fileName, file)
+        .then(({ res, url, name }) => {
+          if (res && res.status == 200) {
+            // console.log(`阿里云OSS上传文件成功回调`, res, url, name);
+            this.form.cover = url;
+          }
+        })
+        .catch((err) => {
+          console.log(`阿里云OSS上传失败回调`, err);
+        });
+    },
+    handleRemove(e, fileList) {
+      this.fileList = fileList;
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("文件大小不能超过 2M !");
+      }
+      return isLt2M;
     },
   },
 };

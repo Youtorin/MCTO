@@ -9,7 +9,7 @@ CREATE TABLE `Food` (
   `originPrice` decimal(10,0) DEFAULT '0' COMMENT '原价',
   `sellPrice` decimal(10,0) DEFAULT '0' COMMENT '售价',
   `number` int(11) DEFAULT NULL COMMENT '库存',
-  `discount` decimal(10,0) DEFAULT '10' COMMENT '折扣',
+  `number` decimal(10,0) DEFAULT '10' COMMENT '折扣',
   `likeNum` int(11) DEFAULT '0' COMMENT '点赞',
   `limitNum` int(11) DEFAULT '0' COMMENT '限购数量',
   `options` varchar(500) DEFAULT NULL COMMENT '规格选项',

@@ -87,6 +87,7 @@ public class UserController {
             model.setStatus(1);
             model.setCreateTime(new Date());
             model.setId(UUID.randomUUID().toString());
+            model.setViewNum(0);
             boolean bool = userServicel.save(model);
             if (bool) {
                 return AjaxResponse.success();
@@ -112,6 +113,8 @@ public class UserController {
                 .eq(User::getPassword,param.getPassword());
         User model = userServicel.getOne(wrapper);
         if (ObjectUtils.isNotEmpty(model)) {
+            model.setViewNum(model.getViewNum() + 1);
+            userServicel.updateById(model);
             return AjaxResponse.success(model);
         }
         return AjaxResponse.error(AjaxResponse.ErrorInfo.ERR_SQL_NOT_EXITS);

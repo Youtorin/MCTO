@@ -131,9 +131,6 @@
           <el-button @click="addShoping" type="danger" round
             >加入购物车</el-button
           >
-          <el-button @click="addShoping" type="warning" round
-            >立即购买</el-button
-          >
           <el-button @click="detailsVisible = false" type="info" round
             >关闭</el-button
           >
@@ -146,7 +143,7 @@
 <script>
 import { GetCateList } from "@/api/foodCategory.js";
 import { GetList } from "@/api/food.js";
-import { currentUser } from "@/assets/js/Common";
+import { currentUser, messageShow } from "@/assets/js/Common";
 export default {
   name: "Rank",
   data() {
@@ -163,7 +160,7 @@ export default {
         cateId: "",
         cover: "",
         title: "",
-        discount: 0,
+        number: 0,
         createTime: "",
         description: "",
         count: 0,
@@ -212,6 +209,7 @@ export default {
         this.form.count = 1;
         this.shopingList.push(this.form);
       }
+      messageShow("success", "加入购物车成功", 1000);
       localStorage.setItem(
         currentUser.username + "shopCart",
         JSON.stringify(this.shopingList)

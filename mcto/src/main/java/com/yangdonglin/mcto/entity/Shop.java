@@ -7,6 +7,8 @@ import com.yangdonglin.mcto.module.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.math.BigDecimal;
+
 /**
  * <p>
  * 商家登录表
@@ -39,6 +41,18 @@ public class Shop extends BaseEntity {
      */
     @TableField("password")
     private String password;
+
+    /**
+     * 待办事项 Json
+     */
+    @TableField("todoItem")
+    private String todoItem;
+
+    /**
+     * 商店存款
+     */
+    @TableField("wallet")
+    private BigDecimal wallet;
 
     /**
      * 手机号

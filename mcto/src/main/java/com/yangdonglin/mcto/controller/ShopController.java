@@ -2,6 +2,7 @@ package com.yangdonglin.mcto.controller;
 
 
 import com.yangdonglin.mcto.dto.IdDto;
+import com.yangdonglin.mcto.dto.TodoDto;
 import com.yangdonglin.mcto.entity.Shop;
 import com.yangdonglin.mcto.entity.Shopinfo;
 import com.yangdonglin.mcto.mapper.ShopMapper;
@@ -78,5 +79,13 @@ public class ShopController extends BaseController {
             shopService.save(model);
             return AjaxResponse.success();
         }
+    }
+
+    @PostMapping("/addTodo")
+    public AjaxResponse addTodo(@RequestBody TodoDto param){
+        Shop model = shopService.getById(param.getId());
+        model.setTodoItem(param.getTodoItem());
+        shopService.updateById(model);
+        return AjaxResponse.success();
     }
 }

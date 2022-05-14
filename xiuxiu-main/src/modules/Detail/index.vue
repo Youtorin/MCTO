@@ -3,7 +3,20 @@
     <el-row>
       <el-col>
         <div class="logo">
-          <img src="./images/logo.png" alt="" />
+          <el-image
+            v-if="user.img"
+            style="height: 130px; weight: 130px"
+            :src="user.img"
+            alt=""
+          ></el-image>
+
+          <el-image
+            v-else
+            :src="require('./images/logo.png')"
+            style="height: 130px; weight: 130px"
+            alt=""
+          ></el-image>
+
           <span class="name">{{ user.username }}</span>
           <div class="sex" v-if="user.gender == '男'">
             <img src="./images/性别男.png" alt="" />
@@ -77,6 +90,26 @@
     >
       <el-main style="height: 50%">
         <el-form :model="form" ref="modelInfo" label-width="100px">
+          <el-form-item label="头像:" prop="images">
+            <el-upload
+              ref="upload"
+              style="display: inline-block"
+              action=""
+              multiple
+              :limit="1"
+              :http-request="httpRequest"
+              :on-remove="handleRemove"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img
+                v-if="form.img"
+                :src="form.img"
+                style="width: 170px; height: 170px"
+                class="avatar"
+              />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
           <el-form-item label="用户名" prop="username">
             <el-input
               type="text"
@@ -227,10 +260,12 @@ export default {
       userWalletVisible: false,
       loading: false,
       bodyLoading: false,
+      img: "",
       user: {
         username: "",
         password: "",
         age: 0,
+        img: "",
         // 钱包
         wallet: "",
         email: "",
@@ -243,6 +278,7 @@ export default {
         username: "",
         password: "",
         age: 0,
+        img: "",
         // 钱包
         wallet: 0,
         email: "",
@@ -407,6 +443,42 @@ export default {
       // console.log("qrurl " + result.qrur);
       // sessionStorage.amt = this.rechargeParams.totalAmt;
       // this.$router.push({ path: "/code" });
+    },
+
+    httpRequest({ file }) {
+      //阿里云OSS上传
+      const fileName = `${Date.parse(new Date())}/${file.name}`; //定义唯一的文件名
+      // console.log(fileName)
+      let OSS = require("ali-oss");
+      var client = new OSS({
+        region: "oss-cn-hangzhou", //节点
+        accessKeyId: "LTAI5t8AEpDswvW4QVp6iyjq",
+        accessKeySecret: "0vtOgQcKwzVibXPhITvwRaJGuCTgxp",
+        bucket: "yangdonglin",
+      });
+
+      client
+        .put(fileName, file)
+        // eslint-disable-next-line no-unused-vars
+        .then(({ res, url, name }) => {
+          if (res && res.status == 200) {
+            // console.log(`阿里云OSS上传文件成功回调`, res, url, name);
+            this.form.img = url;
+          }
+        })
+        .catch((err) => {
+          console.log(`阿里云OSS上传失败回调`, err);
+        });
+    },
+    handleRemove(e, fileList) {
+      this.fileList = fileList;
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("文件大小不能超过 2M !");
+      }
+      return isLt2M;
     },
   },
 };

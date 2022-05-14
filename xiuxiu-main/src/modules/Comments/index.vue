@@ -1,10 +1,10 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <ul>
       <li v-for="item in comments" :key="item.id">
         <div class="msg">
-          <img :src="item.userImg" alt="" />
-          <span>{{ item.useName }}</span>
+          <el-image :src="item.userImg" alt=""></el-image>
+          <span>{{ item.username }}</span>
         </div>
         <div class="comment">
           <el-rate
@@ -12,20 +12,14 @@
             disabled
             show-score
             text-color="#ff9900"
-           style="margin-left:20px"
+            style="margin-left: 20px"
           >
           </el-rate>
-          <span style="font-size:16px">{{ item.content }}</span>
+          <span style="font-size: 16px">{{ item.content }}</span>
 
-          <el-carousel
-            trigger="click"
-            height="200px"
-            width="300px"
-            class="pic"
-            
-          >
-            <el-carousel-item v-for="(pic, index) in item.images" :key="index" >
-              <img :src="pic" alt="" height="100%" width="100%">
+          <el-carousel trigger="click" height="400px" width="300px" class="pic">
+            <el-carousel-item v-for="(pic, index) in item.images" :key="index">
+              <img :src="pic" alt="" height="100%" width="100%" />
             </el-carousel-item>
           </el-carousel>
           <el-divider></el-divider>
@@ -36,201 +30,35 @@
 </template>
 
 <script>
+import { GetCommentList } from "@/api/orderComment.js";
 export default {
   name: "Comments",
   data() {
     return {
-      comments: [
-        {
-          // 评分
-          score:4.5,
-          id: "1",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=2244213269,3659097181&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=2244213269,3659097181&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500",
-            "https://img1.baidu.com/it/u=2244213269,3659097181&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-        {
-          // 评分
-          score:4.5,
-          id: "2",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-        {
-          // 评分
-          score:4.5,
-          id: "3",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-        {
-          // 评分
-          score:4.5,
-          id: "4",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-        {
-          // 评分
-          score:4.5,
-          id: "5",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-        {
-          // 评分
-          score:4.5,
-          id: "6",
-          // 订单id
-          orderId: "123",
-          userId: "222",
-          // 用户名
-
-          useName: "jioajfoia",
-          // 用户头像
-          userImg:
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          // 评论内容
-          content: "真不错啊",
-          // 评论图片
-          images: [
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-            "https://img1.baidu.com/it/u=671076267,3648872689&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-          ],
-          // 点赞数量
-          numPraise: 100,
-          // 创建时间
-          CreateTime: "",
-          // 显示序号
-          ViewOrder: 55,
-          // 状态
-          Status: 1,
-          // 更新时间
-          TimeStamp: "12",
-        },
-      ],
+      comments: [],
+      loading: false,
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      this.loading = true;
+      GetCommentList()
+        .then((res) => {
+          if (res.success) {
+            this.comments = res.result;
+            for (var i = 0; i < this.comments.length; i++) {
+              this.comments[i].images = JSON.parse(this.comments[i].images);
+            }
+            this.loading = false;
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
   },
 };
 </script>
@@ -241,11 +69,6 @@ export default {
   line-height: 150px;
   margin: 0;
 }
-
-// .el-carousel__item:nth-child(2n) {
-//    background-color: #99a9bf;
-// }
-
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }

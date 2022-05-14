@@ -2,9 +2,12 @@ package com.yangdonglin.mcto.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yangdonglin.mcto.dto.CountDto;
 import com.yangdonglin.mcto.dto.IdDto;
 import com.yangdonglin.mcto.dto.OrderDto;
 import com.yangdonglin.mcto.entity.*;
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.security.Timestamp;
+import java.sql.Time;
 import java.util.*;
 
 /**
@@ -55,6 +60,9 @@ public class OrderController extends BaseController {
 
     @Resource
     private OrderMapper orderMapper;
+
+    @Resource
+    private FoodService foodService;
 
 
     @PostMapping("/getList")
@@ -95,6 +103,7 @@ public class OrderController extends BaseController {
                 p.like("username", params.getKeywords())
                         .or().like("userMobile", params.getKeywords())
                         .or().like("userMobile", params.getKeywords())
+                        .or().like("id", params.getKeywords())
                         .or().like("food", params.getKeywords());
             });
         }
@@ -141,17 +150,31 @@ public class OrderController extends BaseController {
     @PostMapping("/setOrderStatus")
     AjaxResponse setOrderStatus(@RequestBody OrderDto param) {
         Order orderModel = orderService.getById(param.getId());
-        //当订单创建成功时
+        //当订单创建成功时 扣款 减少商品库存数量
         if ("2".equals(param.getPayType())) {
             User userModel = userService.getById(orderModel.getUserId());
             BigDecimal wallet = userModel.getWallet();
             if (wallet.compareTo(param.getPrice()) != -1) {
+                //用户扣款
                 BigDecimal subtract = wallet.subtract(param.getPrice());
                 userModel.setWallet(subtract);
+                //店铺增加余额
+                Shop shopModel = shopService.getById(orderModel.getShopId());
+                shopModel.setWallet(shopModel.getWallet().add(param.getPrice()));
                 userService.updateById(userModel);
+                shopService.updateById(shopModel);
             } else {
                 return AjaxResponse.error("钱包余额不足");
             }
+        }
+        if (ObjectUtils.isNotEmpty(param.getPayType())) {
+            //只要付款成功便减少库存
+            List<Food> foodList = JSON.parseArray(orderModel.getFood(), Food.class);
+            List<CountDto> countDto = JSON.parseArray(orderModel.getFood(), CountDto.class);
+            for (int i = 0; i < foodList.size(); ++i) {
+                foodList.get(i).setNumber(foodList.get(i).getNumber() - countDto.get(i).getCount());
+            }
+            foodService.updateBatchById(foodList);
         }
         orderModel.setStatus(param.getStatus());
         boolean bool = orderService.updateById(orderModel);
@@ -207,6 +230,10 @@ public class OrderController extends BaseController {
         User userModel = userService.getById(model.getUserId());
         userModel.setWallet(userModel.getWallet().add(param.getPayMoney()));
         userService.updateById(userModel);
+        //商店信息信息-减少退款
+        Shop shopModel = shopService.getById(model.getId());
+        shopModel.setWallet(shopModel.getWallet().subtract(param.getPayMoney()));
+        shopService.updateById(shopModel);
 
         boolean bool = orderService.updateById(model);
         if (bool) {

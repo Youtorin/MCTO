@@ -15,3 +15,9 @@ export const GetInfo = (param) => post("/api/shop/getInfo", param);
  * 修改商店基本信息
  */
 export const Edit = (param) => post("/api/shop/edit", param);
+
+
+/*
+ * 修改商店基本信息
+ */
+export const AddTodo = (param) => post("/api/shop/addTodo", param);

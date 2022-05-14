@@ -136,12 +136,8 @@
     <el-dialog v-model="outerVisible" title="用户信息详情" width="50%">
       <el-main style="height: 50%">
         <template #default v-loading="boxLoading">
-          <el-collapse v-model="actionvalue" accordion>
-            <el-collapse-item
-              title="用户信息"
-              name="1"
-              class="wn-form-collapse"
-            >
+          <el-tabs v-model="actionvalue">
+            <el-tab-pane label="用户信息" name="1">
               <el-main class="wnw-main">
                 <el-form :model="form" label-width="100px">
                   <el-row>
@@ -207,13 +203,8 @@
                   </el-row>
                 </el-form>
               </el-main>
-            </el-collapse-item>
-
-            <el-collapse-item
-              title="地址列表"
-              name="2"
-              class="wn-form-collapse"
-            >
+            </el-tab-pane>
+            <el-tab-pane label="地址列表" name="2">
               <el-main class="wnw-main">
                 <el-table :data="userAddressList" style="width: 100%">
                   <el-table-column
@@ -248,8 +239,8 @@
                   ></el-table-column>
                 </el-table>
               </el-main>
-            </el-collapse-item>
-          </el-collapse>
+            </el-tab-pane>
+          </el-tabs>
         </template>
       </el-main>
       <template #footer>
@@ -273,7 +264,7 @@ export default {
       loading: false,
       boxLoading: false,
       outerVisible: false,
-      actionvalue: ["1"],
+      actionvalue: "1",
       tableData: [],
       userAddressList: [],
       total: 0,
@@ -352,13 +343,13 @@ export default {
           if (res.success) {
             messageShow("success", "禁用成功！");
             this.loading = false;
+            this.Search();
           }
         })
         .catch((err) => {
           messageShow("warning", "禁用失败！");
           this.loading = false;
         });
-      this.loading = false;
     },
     handleCurrentChange(page) {
       this.param.pagination.page = page;

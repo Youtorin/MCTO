@@ -11,6 +11,7 @@ import com.yangdonglin.mcto.module.BaseController;
 import com.yangdonglin.mcto.module.PageQueryParams;
 import com.yangdonglin.mcto.module.PageResult;
 import com.yangdonglin.mcto.service.FoodService;
+import com.yangdonglin.mcto.service.FoodcategoryService;
 import com.yangdonglin.mcto.utils.BeanCopyHelper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,8 +42,11 @@ public class FoodController extends BaseController {
     @Resource
     private FoodService foodService;
 
+    @Resource
+    private FoodcategoryService foodcategoryService;
+
     @PostMapping("/getList")
-    AjaxResponse getList(@RequestBody PageQueryParams params){
+    AjaxResponse getList(@RequestBody PageQueryParams params) {
         QueryWrapper<Food> wrapper = new QueryWrapper<Food>();
         wrapper.eq("status", 1);
         if (StringUtils.isNotBlank(params.getKeywords())) {
@@ -62,10 +66,10 @@ public class FoodController extends BaseController {
     }
 
     @PostMapping("/delete")
-    AjaxResponse delete(@RequestBody List<IdDto> ids) {
+    AjaxResponse delete(@RequestBody List<String> ids) {
         List<Food> list = new ArrayList<>();
-        for (IdDto id : ids) {
-            Food model = foodService.getById(id.getId());
+        for (String id : ids) {
+            Food model = foodService.getById(id);
             model.setStatus(0);
             list.add(model);
         }
@@ -79,8 +83,12 @@ public class FoodController extends BaseController {
     @PostMapping("/edit")
     AjaxResponse edit(@RequestBody Food param) {
         Food model = foodService.getById(param.getId());
+        Foodcategory cate = foodcategoryService.getById(param.getCateId());
         if (ObjectUtils.isNotEmpty(model)) {
             model = param;
+            if(ObjectUtils.isNotEmpty(cate)){
+                model.setCateName(cate.getName());
+            }
             boolean bool = foodService.updateById(model);
             if (bool) {
                 return AjaxResponse.success();
@@ -92,6 +100,10 @@ public class FoodController extends BaseController {
             model.setStatus(1);
             model.setCreateTime(new Date());
             model.setId(UUID.randomUUID().toString());
+            model.setShopId("111cfb37-b3f3-11ec-b521-00163e18356c");
+            if(ObjectUtils.isNotEmpty(cate)){
+                model.setCateName(cate.getName());
+            }
             boolean bool = foodService.save(model);
             if (bool) {
                 return AjaxResponse.success();

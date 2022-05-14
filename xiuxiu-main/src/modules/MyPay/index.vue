@@ -145,7 +145,7 @@
               <el-button
                 size="mini"
                 type="danger"
-                v-if="scope.row.status !== 1"
+                v-if="scope.row.status !== 1 && scope.row.status !== -1"
                 round
                 :disabled="scope.row.status === 5"
                 @click="handleRefund(scope.row)"
@@ -415,12 +415,66 @@
         <el-button v-if="showPay" type="primary" @click="pay()">支付</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog append-to-body :visible="refundVisible" title="评论" width="35%">
+      <el-main v-loading="commentLoading">
+        <el-form :model="commentText" ref="refund" label-width="100px">
+          <el-form-item label="订单号:" prop="id">
+            <el-input
+              type="text"
+              :readonly="true"
+              v-model="commentText.id"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="用户名:" prop="username">
+            <el-input
+              type="text"
+              :readonly="true"
+              v-model="commentText.username"
+            ></el-input
+          ></el-form-item>
+
+          <el-form-item label="图片:" prop="images">
+            <el-upload
+              ref="upload"
+              style="display: inline-block"
+              action=""
+              multiple
+              :limit="5"
+              :http-request="httpRequest"
+              :on-remove="handleRemove"
+              :before-upload="beforeAvatarUpload"
+              :file-list="fileList"
+            >
+              <el-button type="info" size="mini">点击上传</el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="评分:" prop="score">
+            <el-rate
+              style="margin-top: 8px"
+              v-model="commentText.score"
+            ></el-rate>
+          </el-form-item>
+          <el-form-item label="评论内容:" prop="content">
+            <el-input type="text" v-model="commentText.content"></el-input
+          ></el-form-item>
+        </el-form>
+      </el-main>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="danger" @click="handleCommentSave()">保存</el-button>
+          <el-button @click="refundVisible = false">关闭</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { GetListByUser, Refund, SetOrderStatus } from "@/api/order.js";
 import { messageShow } from "@/assets/js/Common.js";
+import { AddComment } from "@/api/orderComment.js";
+
 import moment from "moment";
 export default {
   name: "MyPay",
@@ -432,10 +486,14 @@ export default {
       refundVisible: false,
       dialogLoding: false,
       payLoading: false,
+      commentLoading: false,
       payVisible: false,
+      commentVisible: false,
       showPay: true,
       tableData: [],
       foodList: [],
+      fileList: [],
+      upFileList: [],
       activeName: "1",
       paymentType: "0",
       // 当前页
@@ -450,6 +508,14 @@ export default {
         username: "",
         totalMoney: "",
         refundReason: "",
+      },
+      commentText: {
+        orderId: "",
+        username: "",
+        userid: "",
+        content: "",
+        score: "",
+        images: [],
       },
       statusList: [
         {
@@ -475,6 +541,10 @@ export default {
         {
           name: "退款中",
           value: 5,
+        },
+        {
+          name: "已关闭",
+          value: -1,
         },
       ],
       param: {
@@ -690,7 +760,65 @@ export default {
     },
     //评论
     handleComment(row) {
-      console.log(row);
+      this.commentText = row;
+      this.commentText.orderId = row.id;
+      this.refundVisible = true;
+    },
+    handleCommentSave() {
+      this.commentLoading == true;
+      this.commentText.images = JSON.stringify(this.upFileList);
+      AddComment(this.commentText)
+        .then((res) => {
+          if (res.success) {
+            messageShow("success", "评论成功！");
+            this.Search();
+            this.upFileList = [];
+            this.commentLoading == false;
+            this.refundVisible = false;
+          }
+        })
+        .catch(() => {});
+    },
+    httpRequest({ file }) {
+      //阿里云OSS上传
+      const fileName = `${Date.parse(new Date())}/${file.name}`; //定义唯一的文件名
+      // console.log(fileName)
+      let OSS = require("ali-oss");
+      var client = new OSS({
+        region: "oss-cn-hangzhou", //节点
+        accessKeyId: "LTAI5t8AEpDswvW4QVp6iyjq",
+        accessKeySecret: "0vtOgQcKwzVibXPhITvwRaJGuCTgxp",
+        bucket: "yangdonglin",
+      });
+
+      client
+        .put(fileName, file)
+        // eslint-disable-next-line no-unused-vars
+        .then(({ res, url, name }) => {
+          if (res && res.status == 200) {
+            // console.log(`阿里云OSS上传文件成功回调`, res, url, name);
+            this.fileList.push({
+              //回显文件name用
+              url: url,
+              id: fileName,
+              name: file.name,
+            });
+            this.upFileList.push(url);
+          }
+        })
+        .catch((err) => {
+          console.log(`阿里云OSS上传失败回调`, err);
+        });
+    },
+    handleRemove(e, fileList) {
+      this.fileList = fileList;
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("文件大小不能超过 2M !");
+      }
+      return isLt2M;
     },
   },
 };

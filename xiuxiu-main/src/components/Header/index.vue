@@ -69,7 +69,7 @@ export default {
       this.activeIndex = key;
     },
     loginout() {
-      localStorage.removeItem("TOKEN");
+      localStorage.setItem("TOKEN", "{}");
       this.$router.push("/login");
     },
   },
