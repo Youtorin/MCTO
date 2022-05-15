@@ -91,11 +91,11 @@ export default {
         index: "/api/dashboard/customer",
         title: "顾客管理",
       },
-      // {
-      //   icon: "el-icon-lx-time",
-      //   index: "/api/dashboard/distribution",
-      //   title: "配送状态",
-      // },
+      {
+        icon: "el-icon-lx-time",
+        index: "/api/dashboard/distribution",
+        title: "配送状态",
+      },
       // {
       //   icon: "el-icon-lx-recharge",
       //   index: "/api/dashboard/finance",

@@ -167,7 +167,6 @@ export const dateParse = (dateStr) => {
 
 export const dateFormat = (dateValue, fmt = 'YYYY-MM-DD') => {
   if (!moment(dateValue).isValid()) {
-    console.warn('[dataFomat]warn: The input param "dataValue" is a invalid date!')
     return dateValue
   }
   return moment(dateValue).format(fmt)

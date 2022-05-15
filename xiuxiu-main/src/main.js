@@ -15,6 +15,7 @@ import "swiper/css/swiper.css";
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+
 Vue.use(tool);
 // Vue.component(Carouse.name, Carouse)
 Vue.component(ElementUI.Pagination.name, ElementUI.Pagination);

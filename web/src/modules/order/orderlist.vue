@@ -117,7 +117,7 @@
                     margin-top: -5px;
                     font-size: 16px;
                   "
-                  ><span>待出库订单</span></el-col
+                  ><span>待配送订单</span></el-col
                 >
               </el-row>
             </el-card>
@@ -232,6 +232,7 @@
             label="手机号"
             prop="userMobile"
             align="center"
+            width="120px"
           ></el-table-column>
           <el-table-column
             label="地址"
@@ -590,7 +591,6 @@ export default {
       SelectCount({ id: this.shopId }).then((res) => {
         if (res.success) {
           this.statusCount = res.result;
-          console.log(this.statusCount);
         }
       });
     },

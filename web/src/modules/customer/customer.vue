@@ -332,7 +332,6 @@ export default {
           this.boxLoading = false;
         });
 
-      console.log(this.userAddressList);
       this.boxLoading = false;
       this.outerVisible = true;
     },

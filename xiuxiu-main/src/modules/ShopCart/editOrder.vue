@@ -110,6 +110,151 @@
               >
             </span>
           </el-dialog>
+
+          <el-dialog
+            append-to-body
+            title="新增收货地址"
+            v-loading="dialogLoding"
+            :visible.sync="newAddressShow"
+            width="30%"
+          >
+            <el-main style="height: 50%">
+              <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="收货人">
+                  <el-input
+                    v-model="form.username"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="所在地区">
+                  <el-cascader
+                    size="large"
+                    :options="options"
+                    v-model="address"
+                    :props="{ value: 'label' }"
+                    @change="handleChange"
+                    :show-all-levels="false"
+                    clearable
+                  >
+                  </el-cascader>
+                </el-form-item>
+                <el-form-item label="详细地址">
+                  <el-input
+                    v-model="form.address"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="手机号码">
+                  <el-input
+                    v-model="form.mobile"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-checkbox-group v-model="isDefault">
+                    <el-checkbox label="设为默认地址" name="type"
+                      >设为默认地址</el-checkbox
+                    >
+                  </el-checkbox-group>
+                </el-form-item>
+              </el-form>
+            </el-main>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="newAddressShow = false" type="danger"
+                >取 消</el-button
+              >
+              <el-button type="primary" @click="SaveNewAdress(edmitType)"
+                >保存</el-button
+              >
+            </span>
+          </el-dialog>
+          <el-dialog
+            append-to-body
+            title="新增收货地址"
+            v-loading="dialogLoding"
+            :visible.sync="newAddressShow"
+            width="30%"
+          >
+            <el-main style="height: 50%">
+              <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="收货人">
+                  <el-input
+                    v-model="form.username"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="所在地区">
+                  <el-button @click="showMapDialog()" type="info" size="mini"
+                    >地图选点</el-button
+                  >
+                  <span style="margin-left: 10px">{{ address }}</span>
+                  <el-cascader
+                    size="large"
+                    :options="options"
+                    v-model="address"
+                    :props="{ value: 'label' }"
+                    @change="handleChange"
+                    :show-all-levels="false"
+                    clearable
+                  >
+                  </el-cascader>
+                </el-form-item>
+                <el-form-item label="详细地址">
+                  <el-input
+                    v-model="form.address"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="手机号码">
+                  <el-input
+                    v-model="form.mobile"
+                    placeholder="请输入内容"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-checkbox-group v-model="isDefault">
+                    <el-checkbox label="设为默认地址" name="type"
+                      >设为默认地址</el-checkbox
+                    >
+                  </el-checkbox-group>
+                </el-form-item>
+              </el-form>
+            </el-main>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="newAddressShow = false" type="danger"
+                >取 消</el-button
+              >
+              <el-button type="primary" @click="SaveNewAdress(edmitType)"
+                >保存</el-button
+              >
+            </span>
+          </el-dialog>
+
+          <!-- 地图选点 -->
+          <el-dialog
+            append-to-body
+            title="地图选点"
+            v-loading="mapPointLoding"
+            :visible.sync="mapPoint"
+            width="30%"
+          >
+            <el-main style="height: 50%">
+              <div class="home_div">
+                <div class="map_title">
+                  <h3>JSAPI Vue2地图组件示例</h3>
+                </div>
+                <div class="amap-wrapper">
+                  <el-amap class="amap-box" :vid="'amap-vue'"></el-amap>
+                </div>
+              </div>
+            </el-main>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="mapPoint = false" type="danger"
+                >取 消</el-button
+              >
+              <el-button type="primary" @click="saveLogPoint()">确定</el-button>
+            </span>
+          </el-dialog>
           <div v-if="!AddressData.length == 0" class="muchAddress">
             <span @click="moreAddress"
               >更多地址
@@ -314,18 +459,25 @@ import {
   DeleteAddress,
 } from "@/api/userAddress.js";
 import { AddOrder, SetOrderStatus } from "@/api/order.js";
+// 添加高德安全密钥
+window._AMapSecurityConfig = {
+  securityJsCode: "eedebd0446466d1971627cc61cba0ab7",
+};
+import AMapLoader from "@amap/amap-jsapi-loader";
 export default {
   data() {
     return {
       loading: false,
       dialogLoding: false,
       payLoading: false,
+      mapPointLoding: false,
       userId: JSON.parse(localStorage.getItem("TOKEN")).id,
       username: JSON.parse(localStorage.getItem("TOKEN")).username,
       activeNames: ["1", "2", "3"],
       AddressData: [],
       tableData: [],
       address: [],
+      map: null,
       backSubTitle: "",
       orderId: "",
       isTranShow: true,
@@ -334,6 +486,7 @@ export default {
       payVisible: false,
       showPay: true,
       paySuccess: false,
+      mapPoint: false,
       limitNum: 1, //默认显示几个地址
       paymentType: "0",
       distribution: "0",
@@ -584,6 +737,35 @@ export default {
           this.messageTime();
         });
     },
+    showMapDialog() {
+      this.$nextTick(() => {
+        this.mapPoint = true;
+        AMapLoader.load({
+          key: "50ae12376cb2ceac475de66385b3847b", //设置您的key
+          version: "2.0",
+          plugins: ["AMap.ToolBar", "AMap.Driving"],
+          AMapUI: {
+            version: "1.1",
+            plugins: [],
+          },
+          Loca: {
+            version: "2.0",
+          },
+        })
+          .then((AMap) => {
+            console.log(AMap);
+            var map = new AMap.Map("container");
+            console.log(map);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      });
+    },
+    //地图选点
+    saveLogPoint() {
+      console.log();
+    },
   },
   filters: {
     payMethod(val) {
@@ -618,3 +800,33 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.home_div {
+  padding: 0px;
+  margin: 0px;
+  width: 90%;
+  height: 100%;
+  position: relative;
+}
+#container {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.map_title {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(27, 25, 27, 0.884);
+}
+h3 {
+  position: absolute;
+  left: 10px;
+  z-index: 2;
+  color: white;
+}
+</style>

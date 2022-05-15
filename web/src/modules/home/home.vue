@@ -142,7 +142,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-card shadow="hover" style="height: 120px">
+          <el-card shadow="hover" style="height: 140px">
             <el-row>
               <el-col :span="20">
                 <span style="font-weight: bold">会员统计</span>
@@ -190,7 +190,7 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card shadow="hover" style="height: 120px">
+          <el-card shadow="hover" style="height: 140px">
             <el-row>
               <el-col :span="20">
                 <span style="font-weight: bold">商品统计</span>
@@ -490,7 +490,6 @@ export default {
       await GetInfo({ id: id }).then((res) => {
         if (res.success) {
           this.todoList = JSON.parse(res.result.todoItem);
-          console.log(this.todoList);
         }
       });
     },
@@ -520,7 +519,6 @@ export default {
           temp.push(this.todoList[i]);
         }
       }
-      console.log(this.temp);
       var id = localStorage.getItem("currentUserId");
       setTimeout(() => {
         AddTodo({ id: id, todoItem: JSON.stringify(temp) }).then((res) => {

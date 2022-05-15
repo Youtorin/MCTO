@@ -527,7 +527,7 @@ export default {
           value: 1,
         },
         {
-          name: "待发货",
+          name: "待配送",
           value: 2,
         },
         {
@@ -679,7 +679,7 @@ export default {
         case 2:
           return "已支付";
         case 3:
-          return "已发货";
+          return "已配送";
         case 4:
           return "已完成";
         case 5:

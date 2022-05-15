@@ -22,6 +22,13 @@ export default defineConfig({
         target: "http://localhost:6000",
         changeOrigin: true,
       },
+      "/v1": {
+        target: "https://restapi.amap.com/v3/geocode",
+        changeOrigin: true,
+        pathRewrite: {
+          '^/amap': ''
+        }
+      },
     },
   },
 });

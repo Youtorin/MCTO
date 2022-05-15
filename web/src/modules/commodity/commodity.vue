@@ -306,7 +306,6 @@ export default {
         .then((res) => {
           if (res.success && res.result) {
             this.cateList = res.result;
-            console.log(this.cateList);
             this.cateList.unshift({
               name: "全部分类",
               id: "",
@@ -319,7 +318,6 @@ export default {
           if (res.success && res.result) {
             this.tableData = res.result.items;
             this.total = res.result.totalcount;
-            console.log(this.tableData);
           }
         })
         .catch((err) => {});
@@ -366,7 +364,6 @@ export default {
     },
     async save() {
       this.loading = true;
-      console.log(this.form);
       await Edit(this.form)
         .then((res) => {
           if (res.success) {
@@ -432,7 +429,6 @@ export default {
     httpRequest({ file }) {
       //阿里云OSS上传
       const fileName = `${Date.parse(new Date())}/${file.name}`; //定义唯一的文件名
-      // console.log(fileName)
       let OSS = require("ali-oss");
       var client = new OSS({
         region: "oss-cn-hangzhou", //节点
@@ -445,7 +441,6 @@ export default {
         .put(fileName, file)
         .then(({ res, url, name }) => {
           if (res && res.status == 200) {
-            // console.log(`阿里云OSS上传文件成功回调`, res, url, name);
             this.form.cover = url;
           }
         })

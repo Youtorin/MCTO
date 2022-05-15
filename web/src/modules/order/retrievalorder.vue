@@ -1,4 +1,4 @@
-/** 出库订单管理 */
+/** 配送订单管理 */
 <template>
   <el-container
     style="height: 100%"
@@ -217,12 +217,8 @@ export default {
     this.total = this.tableData.length;
   },
   methods: {
-    ShowDetails(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
+    ShowDetails(index, row) {},
+    handleDelete(index, row) {},
     handleSizeChange() {},
     handleCurrentChange() {},
   },
