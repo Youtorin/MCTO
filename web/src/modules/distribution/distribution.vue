@@ -18,21 +18,10 @@
       v-loading="loading"
     >
       <el-aside style="width: 60%; height: 100%">
-        <!-- <el-timeline
-          style="padding: 20px"
-          v-for="item in tableData"
-          :key="item"
-        >
-          <el-timeline-item :timestamp="item.userAddress" placement="top">
-            <el-card>
-              <h4>前方100米左转</h4>
-              <p>直行300米</p>
-            </el-card>
-          </el-timeline-item>
-        </el-timeline> -->
         <iframe
           src="/mapIfram.html"
-          ref="iframe"
+          ref="frame"
+          @load="onLoad"
           width="100%"
           height="100%"
           scrolling="no"
@@ -107,6 +96,10 @@ export default {
       loading: false,
       tableData: [],
       iframeWin: {},
+      params: [
+        { lng: 122.988404, lat: 41.111892 },
+        { lng: 122.995366, lat: 41.076753 },
+      ],
       param: {
         status: 4,
         keywords: "",
@@ -122,21 +115,21 @@ export default {
   },
 
   mounted() {
-    this.sendIframeWinpMessage();
+    //this.sendIframeWinpMessage();
+    //this.$refs.iframe.addEventListener("load", this.sendIframeWinpMessage());
     this.loaddata();
-    // GetDis().then((res) => {
-    //   console.log(res);
-    // });
-    //this.initMap();
   },
   methods: {
+    onLoad() {
+      this.iframeWin = this.$refs.frame.contentWindow;
+      this.sendIframeWinpMessage();
+    },
     sendIframeWinpMessage() {
-      this.iframeWin = this.$refs.iframe.contentWindow;
       this.iframeWin.postMessage(
         {
           params: [
-            { lng: 122.988404, lat: 41.111892 },
-            { lng: 122.995366, lat: 41.076753 },
+            { lng: 121.507738, lat: 38.88029 },
+            { lng: 121.516493, lat: 38.860332 },
           ],
         },
         "*"

@@ -134,7 +134,7 @@ public class OrderController extends BaseController {
         order.setShopId(shopinfoModel.getShopId());
         order.setShopname(shopinfoModel.getShopname());
         order.setShopMobile(shopinfoModel.getMobile());
-        order.setShopAddress(shopinfoModel.getProvince() + shopinfoModel.getCity() + shopinfoModel.getDistrict() + shopinfoModel.getAddress());
+        order.setShopAddress(shopinfoModel.getDistrict() + shopinfoModel.getAddress());
 
         order.setId(UUID.randomUUID().toString());
         order.setCreateTime(new Date());

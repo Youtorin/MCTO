@@ -217,17 +217,7 @@
                   >
                   </el-table-column>
                   <el-table-column
-                    label="省"
-                    prop="province"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="市"
-                    prop="city"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    label="区"
+                    label="城市住址"
                     prop="district"
                     align="center"
                   ></el-table-column>

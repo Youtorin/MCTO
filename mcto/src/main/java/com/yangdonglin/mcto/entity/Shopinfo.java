@@ -75,17 +75,7 @@ public class Shopinfo extends BaseEntity {
     private String logoImg;
 
     /**
-     * 省
-     */
-    private String province;
-
-    /**
-     * 市
-     */
-    private String city;
-
-    /**
-     * 区
+     * 省市区
      */
     private String district;
 

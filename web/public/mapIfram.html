@@ -47,7 +47,7 @@
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.15&key=50ae12376cb2ceac475de66385b3847b&plugin=AMap.Driving"></script>
-    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    
 </head>
 
 <body>
@@ -56,34 +56,32 @@
     <script type="text/javascript">
         //获取经纬度
         var lnglat = []
-        window.addEventListener("message", function (event) {
+        this.window.addEventListener("message", function (event) {
             var data = event.data;
-            console.log("从vue中获得的数据", data);
-            // 定义一个变量去接收,然后就可以获得vue传过来的数据
+            // 定义一个变量接收
             lnglat = data.params;
+
+            //基本地图加载
+            var map = new AMap.Map("container", {
+                resizeEnable: true,
+                center: [121.507738,38.88029],//地图中心点
+                zoom: 18 //地图显示的缩放级别
+            });
+            //构造路线导航类
+            var driving = new AMap.Driving({
+                map: map,
+                panel: "panel"
+            });
+            //根据起终点经纬度规划驾车导航路线
+            driving.search(new AMap.LngLat(lnglat[0].lng, lnglat[0].lat), new AMap.LngLat(lnglat[1].lng, lnglat[1].lat), function (status, result) {
+                // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+                if (status === 'complete') {
+                    log.success('绘制驾车路线完成')
+                } else {
+                    log.error('获取驾车数据失败：' + result)
+                }
+            });
         }, "*")
-        console.log(lnglat)
-        console.log(111)
-        //基本地图加载
-        var map = new AMap.Map("container", {
-            resizeEnable: true,
-            center: [116.397428, 39.90923],//地图中心点
-            zoom: 13 //地图显示的缩放级别
-        });
-        //构造路线导航类
-        var driving = new AMap.Driving({
-            map: map,
-            panel: "panel"
-        });
-        //根据起终点经纬度规划驾车导航路线
-        driving.search(new AMap.LngLat(lnglat[0].lng, lnglat[0].lat), new AMap.LngLat(lnglat[1].lng, lnglat[1].lat), function (status, result) {
-            // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-            if (status === 'complete') {
-                log.success('绘制驾车路线完成')
-            } else {
-                log.error('获取驾车数据失败：' + result)
-            }
-        });
     </script>
 </body>
 

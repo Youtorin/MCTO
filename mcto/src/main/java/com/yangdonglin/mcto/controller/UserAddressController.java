@@ -81,7 +81,7 @@ public class UserAddressController extends BaseController {
         } else {
             model = param;
             model.setId(UUID.randomUUID().toString());
-            model.setAddress(param.getProvince() + param.getCity() + param.getDistrict() + param.getAddress());
+            model.setAddress(param.getDistrict() + param.getAddress());
             model.setStatus(1);
             model.setCreateTime(new Date());
             if(model.getIsDefault() == 1){

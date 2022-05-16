@@ -46,19 +46,7 @@ public class UserAddress extends BaseEntity {
     private String mobile;
 
     /**
-     * 省
-     */
-    @TableField("province")
-    private String province;
-
-    /**
-     * 市
-     */
-    @TableField("city")
-    private String city;
-
-    /**
-     * 区
+     * 省市区
      */
     @TableField("district")
     private String district;
