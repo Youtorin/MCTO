@@ -49,6 +49,11 @@ public class Order extends BaseEntity {
     private String userAddress;
 
     /**
+     * 用户地址与商铺地址距离
+     */
+    private Double distance;
+
+    /**
      * 用户备注内容
      */
     private String remark;

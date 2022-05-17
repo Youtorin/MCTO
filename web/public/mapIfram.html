@@ -47,40 +47,73 @@
     <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
     <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.15&key=50ae12376cb2ceac475de66385b3847b&plugin=AMap.Driving"></script>
-    
+
 </head>
 
 <body>
     <div id="container"></div>
-    <div id="panel"></div>
     <script type="text/javascript">
         //获取经纬度
-        var lnglat = []
-        this.window.addEventListener("message", function (event) {
-            var data = event.data;
+        window.addEventListener("message", async function (event) {
+            var data = JSON.parse(event.data);
+            var start = data.start
+            let begin = data.start;
+            var shopLng = start
+            var tableData = data.tableData
+            var orderLngList = data.orderLngList
+            var endLng
+            var executeTime
             // 定义一个变量接收
-            lnglat = data.params;
-
+            var lnglat = data;
             //基本地图加载
             var map = new AMap.Map("container", {
                 resizeEnable: true,
-                center: [121.507738,38.88029],//地图中心点
+                center: [121.507738, 38.88029],//地图中心点
                 zoom: 18 //地图显示的缩放级别
             });
             //构造路线导航类
             var driving = new AMap.Driving({
                 map: map,
-                panel: "panel"
             });
             //根据起终点经纬度规划驾车导航路线
-            driving.search(new AMap.LngLat(lnglat[0].lng, lnglat[0].lat), new AMap.LngLat(lnglat[1].lng, lnglat[1].lat), function (status, result) {
-                // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
-                if (status === 'complete') {
-                    log.success('绘制驾车路线完成')
-                } else {
-                    log.error('获取驾车数据失败：' + result)
+            for (let i = 0; i < tableData.length; i++) {
+                endLng = orderLngList[i];
+                executeTime = tableData[i].distance / 500;
+
+                setTimeout(() => {
+                    console.log("begin", begin)
+                    console.log("end", orderLngList[i])
+                    if (i !== 0) {
+                        begin = orderLngList[i - 1]
+                    }
+
+                    driving.search(new AMap.LngLat(begin.lng, begin.lat),
+                        new AMap.LngLat(orderLngList[i].lng, orderLngList[i].lat), function (status, result) {
+                            if (status === 'complete') {
+                                log.success('配送路线规划完成')
+                            } else {
+                                log.error('配送路线规划失败：' + result)
+                            }
+                        });
+                }, executeTime * 1000 * i)
+                start = endLng;
+                if (i === tableData.length - 1) {
+                    endLng = shopLng;
+                    setTimeout(() => {
+                        console.log(start)
+                        console.log(endLng)
+                        console.log("---------")
+                        driving.search(new AMap.LngLat(start.lng, start.lat),
+                            new AMap.LngLat(endLng.lng, endLng.lat), function (status, result) {
+                                if (status === 'complete') {
+                                    log.success('绘制驾车路线完成')
+                                } else {
+                                    log.error('获取驾车数据失败：' + result)
+                                }
+                            });
+                    }, executeTime * 1000 * tableData.length)
                 }
-            });
+            }
         }, "*")
     </script>
 </body>

@@ -18,6 +18,7 @@ import com.yangdonglin.mcto.module.PageQueryParams;
 import com.yangdonglin.mcto.module.PageResult;
 import com.yangdonglin.mcto.service.*;
 import com.yangdonglin.mcto.utils.BeanCopyHelper;
+import com.yangdonglin.mcto.utils.MathUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +71,9 @@ public class OrderController extends BaseController {
         QueryWrapper<Order> wrapper = new QueryWrapper<Order>();
         if (ObjectUtils.isNotEmpty(params.getStatus())) {
             wrapper.eq("status", params.getStatus());
+            if (params.getStatus() == 3) {
+                wrapper.or().eq("status", 9);
+            }
         }
         if (StringUtils.isNotBlank(params.getKeywords())) {
             wrapper.and(p -> {
@@ -79,7 +83,7 @@ public class OrderController extends BaseController {
                         .or().like("food", params.getKeywords());
             });
         }
-        wrapper.orderByDesc("createtime");
+        wrapper.orderByAsc(params.getPagination().getSidx());
         Page<Order> page = new Page<>();
         page = orderService.page(new Page<>(params.getPagination().getPage(), params.getPagination().getPageSize()), wrapper);
         PageResult<Order> result = PageResult.create(BeanCopyHelper.copyListProperties(page.getRecords(), Order::new), page.getTotal());
@@ -136,6 +140,9 @@ public class OrderController extends BaseController {
         order.setShopMobile(shopinfoModel.getMobile());
         order.setShopAddress(shopinfoModel.getDistrict() + shopinfoModel.getAddress());
 
+        double distance = MathUtils.getDistance(Double.parseDouble(shopinfoModel.getLatitude()), Double.parseDouble(shopinfoModel.getLongitude()),
+                Double.parseDouble(userAddressModel.getLatitude()), Double.parseDouble(userAddressModel.getLongitude()));
+        order.setDistance(Math.floor(distance));
         order.setId(UUID.randomUUID().toString());
         order.setCreateTime(new Date());
         order.setStatus(1);

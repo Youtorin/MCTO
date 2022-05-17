@@ -70,6 +70,7 @@ public class UserAddressController extends BaseController {
         UserAddress model = userAddressService.getById(param.getId());
         if (ObjectUtils.isNotEmpty(model)) {
             model = param;
+            model.setAddress(param.getDistrict() + param.getAddress());
             if(model.getIsDefault() == 1){
                 filterDefaule(model.getUserId());
             }

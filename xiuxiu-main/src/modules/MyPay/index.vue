@@ -416,7 +416,12 @@
       </span>
     </el-dialog>
 
-    <el-dialog append-to-body :visible="refundVisible" title="评论" width="35%">
+    <el-dialog
+      append-to-body
+      :visible="commentVisible"
+      title="评论"
+      width="35%"
+    >
       <el-main v-loading="commentLoading">
         <el-form :model="commentText" ref="refund" label-width="100px">
           <el-form-item label="订单号:" prop="id">
@@ -463,7 +468,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button type="danger" @click="handleCommentSave()">保存</el-button>
-          <el-button @click="refundVisible = false">关闭</el-button>
+          <el-button @click="commentVisible = false">关闭</el-button>
         </div>
       </template>
     </el-dialog>
@@ -762,7 +767,7 @@ export default {
     handleComment(row) {
       this.commentText = row;
       this.commentText.orderId = row.id;
-      this.refundVisible = true;
+      this.commentVisible = true;
     },
     handleCommentSave() {
       this.commentLoading == true;
@@ -774,7 +779,7 @@ export default {
             this.Search();
             this.upFileList = [];
             this.commentLoading == false;
-            this.refundVisible = false;
+            this.commentVisible = false;
           }
         })
         .catch(() => {});

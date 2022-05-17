@@ -78,6 +78,22 @@
               {{ FormatUTC2Local(scope.row.createTime) }}
             </template>
           </el-table-column>
+          <el-table-column
+            v-if="param.status !== 5"
+            label="创建时间"
+            prop="createTime"
+            width="120px"
+            align="left"
+            ><template #default="scope">
+              <el-button
+                size="mini"
+                type="primary"
+                round
+                @click="handleDeliver(scope.row.id)"
+                >确认送达</el-button
+              ></template
+            >
+          </el-table-column>
         </el-table>
       </el-main>
     </el-container>
@@ -88,52 +104,105 @@
 // import { GetDis } from "@/api/distribution.js";
 // import VueAMap from "vue-amap";
 
-import { GetOrderList, SelectCount } from "@/api/order.js";
+import { GetOrderList, SetOrderStatus } from "@/api/order.js";
+import { GetInfo } from "@/api/shopinfo.js";
+import { GetAddressModel } from "@/api/userAddress.js";
 import moment from "moment";
 export default {
   data() {
     return {
       loading: false,
       tableData: [],
+      orderLngList: [],
       iframeWin: {},
-      params: [
-        { lng: 122.988404, lat: 41.111892 },
-        { lng: 122.995366, lat: 41.076753 },
-      ],
+      shopId: localStorage.getItem("currentUserId"),
+      start: {}, //导航起点坐标
+      end: {}, //导航终点坐标
+      shopLng: {}, //当前店铺坐标
+      executeTime: 0,
       param: {
-        status: 4,
+        status: 9,
         keywords: "",
         pagination: {
           rows: 999,
           page: 1,
-          sidx: "CreateTime",
+          sidx: "distance",
           sord: "desc",
         },
       },
       result: {},
     };
   },
-
+  created() {
+    this.getShopLngData();
+  },
   mounted() {
-    //this.sendIframeWinpMessage();
-    //this.$refs.iframe.addEventListener("load", this.sendIframeWinpMessage());
     this.loaddata();
   },
   methods: {
     onLoad() {
       this.iframeWin = this.$refs.frame.contentWindow;
-      this.sendIframeWinpMessage();
+      this.executePlan();
     },
-    sendIframeWinpMessage() {
-      this.iframeWin.postMessage(
-        {
-          params: [
-            { lng: 121.507738, lat: 38.88029 },
-            { lng: 121.516493, lat: 38.860332 },
-          ],
-        },
-        "*"
-      );
+    //获取当前商铺坐标点
+    async getShopLngData() {
+      var shopLng = { lng: "", lat: "" };
+      await GetInfo({ id: this.shopId })
+        .then((res) => {
+          if (res.success && res.result !== null) {
+            shopLng.lng = res.result.longitude;
+            shopLng.lat = res.result.latitude;
+            this.shopLng = shopLng;
+          }
+        })
+        .catch((err) => {});
+    },
+    //获取用户订单坐标点
+    async getOrderLngData(id) {
+      var orderLng = { lng: "", lat: "" };
+      await GetAddressModel({ id: id }).then((res) => {
+        if (res.success && res.result !== null) {
+          orderLng.lng = res.result.longitude;
+          orderLng.lat = res.result.latitude;
+          this.orderLngList.push(orderLng);
+        }
+      });
+    },
+    //循环执行路线规划并在规定时间后发货
+    async executePlan() {
+      var par = { start: {}, tableData: [], orderLngList: [] };
+      for (var i = 0; i < this.tableData.length; i++) {
+        await this.getOrderLngData(this.tableData[i].userAddressId);
+      }
+      par.start = this.start;
+      par.tableData = this.tableData;
+      par.orderLngList = this.orderLngList;
+      console.log(par);
+      this.iframeWin.postMessage(JSON.stringify(par), "*");
+    },
+    //延时等待
+    async sleep(n) {
+      var start = new Date().getTime();
+      while (true) {
+        if (new Date().getTime() - start > n) {
+          break;
+        }
+      }
+    },
+    //确认送达
+    handleDeliver(id) {
+      this.loading = true;
+      SetOrderStatus({ id: id, status: 3 })
+        .then((res) => {
+          if (res.success) {
+            messageShow("success", "确认送达成功！");
+            this.Search();
+            this.loading = false;
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     loaddata() {
       this.loading = true;
@@ -142,17 +211,14 @@ export default {
           if (res.success && res.result) {
             this.tableData = res.result.items;
             this.total = res.result.totalcount;
+            this.start = this.shopLng;
+            this.end = this.tableData;
           }
           this.loading = false;
         })
         .catch((err) => {
           this.loading = false;
         });
-      SelectCount({ id: this.shopId }).then((res) => {
-        if (res.success) {
-          this.statusCount = res.result;
-        }
-      });
     },
     FormatUTC2Local(date) {
       if (date === "" || date === null) {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%">
     <el-container
       style="height: 100%"
       class="background-6F9 eig-mian-doc"
@@ -13,8 +13,7 @@
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>门店管理</el-breadcrumb-item>
       </el-breadcrumb>
-      <el-header></el-header>
-      <el-main class="wnw-main">
+      <el-main class="wnw-main" style="width: 100%">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px">
           <el-form-item label="门店图片" prop="storeImg">
             <el-upload
@@ -212,8 +211,6 @@ export default {
         if (valid) {
           this.form.instoreImg = JSON.stringify(this.form.instoreImg);
           this.form.district = this.address;
-          console.log(11);
-          console.log(this.form);
           this.loading = true;
           Edit(this.form)
             .then((res) => {

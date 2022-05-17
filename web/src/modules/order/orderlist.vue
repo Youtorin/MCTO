@@ -541,12 +541,16 @@ export default {
       if (this.statusCount.length === 0) {
         return 0;
       }
+      let count = 0;
       for (var i = 0; i < this.statusCount.length; i++) {
-        if (this.statusCount[i].Status === 3) {
-          return this.statusCount[i].count;
+        if (
+          this.statusCount[i].Status === 3 ||
+          this.statusCount[i].Status === 9
+        ) {
+          count += this.statusCount[i].count;
         }
       }
-      return 0;
+      return count;
     },
     notDeliverStatusCount() {
       if (this.statusCount.length === 0) {
@@ -630,10 +634,10 @@ export default {
     //发货
     handleDeliver(id) {
       this.loading = true;
-      SetOrderStatus({ id: id, status: 3 })
+      SetOrderStatus({ id: id, status: 9 })
         .then((res) => {
           if (res.success) {
-            messageShow("success", "发货成功!");
+            messageShow("success", "发货成功！正在配送");
             this.Search();
             this.loading = false;
           }
@@ -711,6 +715,8 @@ export default {
           return "已完成";
         case 5:
           return "退款";
+        case 9:
+          return "配送中";
       }
     },
     FormatFoodList(food) {

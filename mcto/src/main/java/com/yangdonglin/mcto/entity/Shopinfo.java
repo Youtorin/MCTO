@@ -23,7 +23,6 @@ import lombok.EqualsAndHashCode;
 @TableName("ShopInfo")
 public class Shopinfo extends BaseEntity {
 
-
     /**
      * 商店id
      */
@@ -128,6 +127,5 @@ public class Shopinfo extends BaseEntity {
      * 起送消费
      */
     private BigDecimal floorSendCost;
-
 
 }
