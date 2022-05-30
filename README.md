@@ -1,9 +1,10 @@
-
+## Java
+运行Java程序，再启动Web项目
 > 
 
-## Build Setup
+## Web
 
-``` bash
+```
 # install dependencies
 npm install
 
