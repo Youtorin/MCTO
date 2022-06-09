@@ -158,10 +158,10 @@
               style="font-size: 34px; font-weight: bold; margin-top: -10px"
             >
               <el-col :span="7">
-                <span>{{ statistics.totalUser }}</span>
+                <span>{{ statistics.totalUser - 1 }}</span>
               </el-col>
               <el-col :span="7">
-                <span>{{ statistics.totalUser }}</span>
+                <span>1</span>
               </el-col>
               <el-col :span="7">
                 <span>{{ statistics.totalUser }}</span>

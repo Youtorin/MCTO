@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap" v-loading="loading">
     <div class="ms-login">
-      <div class="ms-title">修修便利店</div>
+      <div class="ms-title">修修美食店</div>
       <el-form
         :model="user"
         :rules="rules"

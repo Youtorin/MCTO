@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <h2>修修便利店</h2>
+    <h2>修修美食店</h2>
     <div class="topRight">
       <span style="font-size: 18px">欢迎您：{{ username }}</span>
       <el-menu
