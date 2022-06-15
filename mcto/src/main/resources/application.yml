@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     name: MCTO
-    url: jdbc:mysql://120.76.205.240:3306/MCTO?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=CST
+    url: jdbc:mysql://localhost:3306/MCTO?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=CST
     username: root
-    password: Ydl1312076409
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:

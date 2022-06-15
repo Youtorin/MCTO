@@ -120,6 +120,7 @@ export let client = new OSS({
     bucket: 'bucket存储桶名'
 })
 ```
+修改数据库配置文件
 
 分别启动web、xiuxiu-main下的项目和mcto后端
 
