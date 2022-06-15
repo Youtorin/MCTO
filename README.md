@@ -28,67 +28,67 @@ Nodejs、vue、Element-UI
 
 ###### 订单管理：
 
-![image-20220615233318347](img\image-20220615233318347.png)
+![image-20220615233318347](https://s3.bmp.ovh/imgs/2022/06/16/810d6d719217b63c.png)
 
 ###### 门店评价：
 
-![image-20220615233335925](img\image-20220615233335925.png)
+![image-20220615233335925](https://s3.bmp.ovh/imgs/2022/06/16/062d381944c745ba.png)
 
 ###### 商品管理：
 
-![image-20220615233420186](img\image-20220615233420186.png)
+![image-20220615233420186](https://s3.bmp.ovh/imgs/2022/06/16/224389fc1a775df7.png)
 
-![image-20220615233429407](img\image-20220615233429407.png)
+![image-20220615233429407](https://i.postimg.cc/SRmk0w8R/image-20220615233429407.png)
 
 ###### 分类列表：
 
-![image-20220615233441484](img\image-20220615233441484.png)
+![image-20220615233441484](https://i.postimg.cc/25ppRsNY/image-20220615233441484.png)
 
 ###### 顾客管理：
 
-![image-20220615233523830](img\image-20220615233523830.png)
+![image-20220615233523830](https://static01.imgkr.com/temp/e48b398e868044db9058086d01b73245.png)
 
 ###### 配送状态：
 
-![image-20220615233535118](img\image-20220615233535118.png)
+![image-20220615233535118](https://static01.imgkr.com/temp/3cede2896966480c80dd42d79c6032f9.png)
 
-![image-20220615233545618](img\image-20220615233545618.png)
+![image-20220615233545618](https://static01.imgkr.com/temp/9f086e08c22c450982c6d4a05f77c8d8.png)
 
 订单发货后进入配送列表，根据顾客订单地址和商家的距离生成配送预览路径，帮助商家更快选择配送顺序
 
 ###### 门店管理：
 
-![image-20220615233718749](img\image-20220615233718749.png)
+![image-20220615233718749](https://static01.imgkr.com/temp/9bd3c9e80f9944279d08034fa1d0869e.png)
 
 ### 用户端：
 
 ###### 门户首页：
 
-![image-20220615233809671](img\image-20220615233809671.png)
+![image-20220615233809671](https://static01.imgkr.com/temp/7a98c10cc505417a890426b20e711682.png)
 
 ###### 店内评价：
 
-![image-20220615233924184](img\image-20220615233924184.png)
+![image-20220615233924184](https://static01.imgkr.com/temp/cb46718fb9054410bd4d0c5c6feb6b97.png)
 
 ###### 购物车：
 
-![image-20220615233943800](img\image-20220615233943800.png)
+![image-20220615233943800](https://static01.imgkr.com/temp/8b2000ab70554ce3b94bc5ffddf5ed0b.png)
 
 ###### 订单创建：
 
-![image-20220615234014074](img\image-20220615234014074.png)
+![image-20220615234014074](https://static01.imgkr.com/temp/5b6fab5b61c84370a30b4d4cff52e120.png)
 
-![image-20220615234036201](img\image-20220615234036201.png)
+![image-20220615234036201](https://static01.imgkr.com/temp/81afc67fb21a4c98bf6a5a428f4cd5bc.png)
 
-![image-20220615234045153](img\image-20220615234045153.png)
+![image-20220615234045153](https://static01.imgkr.com/temp/126161a282864e2c92ad08c245e6d95e.png)
 
 订单列表：
 
-![image-20220615234058333](img\image-20220615234058333.png)
+![image-20220615234058333](https://i.postimg.cc/2SqtdJSc/image-20220615234058333.png)
 
-资料：
+用户资料：
 
-![image-20220615234122438](img\image-20220615234122438.png)
+![image-20220615234122438](https://i.postimg.cc/PJr3CV7M/image-20220615234122438.png)
 
 
 
