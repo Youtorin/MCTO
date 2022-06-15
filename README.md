@@ -24,7 +24,7 @@ Nodejs、vue、Element-UI
 
 ###### 商家首页：
 
-![image-20220615233230692](https://raw.githubusercontent.com/q3531024747/MCTO/main/img/image-20220615233230692.png)
+![image-20220615233230692](https://raw.githubusercontent.com/q3531024747/MCTO/master/img/image-20220615233230692.png)
 
 ###### 订单管理：
 
