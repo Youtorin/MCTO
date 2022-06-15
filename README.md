@@ -46,41 +46,41 @@ Nodejs、vue、Element-UI
 
 ###### 顾客管理：
 
-![image-20220615233523830](https://static01.imgkr.com/temp/e48b398e868044db9058086d01b73245.png)
+![image-20220615233523830](https://i.postimg.cc/j5MJmY5J/image-20220615233523830.png)
 
 ###### 配送状态：
 
-![image-20220615233535118](https://static01.imgkr.com/temp/3cede2896966480c80dd42d79c6032f9.png)
+![image-20220615233535118](https://i.postimg.cc/y8RcdGfw/image-20220615233535118.png)
 
-![image-20220615233545618](https://static01.imgkr.com/temp/9f086e08c22c450982c6d4a05f77c8d8.png)
+![image-20220615233545618](https://i.postimg.cc/3Nw2xJ6B/image-20220615233545618.png)
 
 订单发货后进入配送列表，根据顾客订单地址和商家的距离生成配送预览路径，帮助商家更快选择配送顺序
 
 ###### 门店管理：
 
-![image-20220615233718749](https://static01.imgkr.com/temp/9bd3c9e80f9944279d08034fa1d0869e.png)
+![image-20220615233718749](https://i.postimg.cc/Jnxb8BT0/image-20220615233718749.png)
 
 ### 用户端：
 
 ###### 门户首页：
 
-![image-20220615233809671](https://static01.imgkr.com/temp/7a98c10cc505417a890426b20e711682.png)
+![image-20220615233809671](https://i.postimg.cc/6QsVfK2W/image-20220615233809671.png)
 
 ###### 店内评价：
 
-![image-20220615233924184](https://static01.imgkr.com/temp/cb46718fb9054410bd4d0c5c6feb6b97.png)
+![image-20220615233924184](https://i.postimg.cc/8P5b1tgS/image-20220615233924184.png)
 
 ###### 购物车：
 
-![image-20220615233943800](https://static01.imgkr.com/temp/8b2000ab70554ce3b94bc5ffddf5ed0b.png)
+![image-20220615233943800](https://i.postimg.cc/qRTL4r4b/image-20220615233943800.png)
 
 ###### 订单创建：
 
-![image-20220615234014074](https://static01.imgkr.com/temp/5b6fab5b61c84370a30b4d4cff52e120.png)
+![image-20220615234014074](https://i.postimg.cc/bNC3b49r/image-20220615234014074.png)
 
-![image-20220615234036201](https://static01.imgkr.com/temp/81afc67fb21a4c98bf6a5a428f4cd5bc.png)
+![image-20220615234036201](https://i.postimg.cc/gj44g79M/image-20220615234036201.png)
 
-![image-20220615234045153](https://static01.imgkr.com/temp/126161a282864e2c92ad08c245e6d95e.png)
+![image-20220615234045153](https://i.postimg.cc/V6qKC6KP/image-20220615234045153.png)
 
 订单列表：
 
