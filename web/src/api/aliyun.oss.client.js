@@ -4,5 +4,5 @@ export let client = new OSS({
     region: 'oss-cn-hangzhou',//节点
     accessKeyId: 'accessKeyId',
     accessKeySecret: 'accessKeySecret',
-    bucket: 'yangdonglin'
+    bucket: 'bucket'
 })
